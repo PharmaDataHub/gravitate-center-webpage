@@ -1,0 +1,122 @@
+---
+/* Shared body for /updates/ and /updates/category/[category]/. */
+import PageHeader from './PageHeader.astro';
+import UpdateList from './UpdateList.astro';
+import { updateCategories, type UpdateCategory } from '../config/site';
+import { categorySlug, type Update } from '../lib/updates';
+import { url } from '../lib/url';
+
+interface Props {
+  updates: Update[];
+  /** Counts per category, from the full (unfiltered) list. */
+  counts: Record<UpdateCategory, number>;
+  total: number;
+  active?: UpdateCategory;
+  title: string;
+  lede: string;
+}
+
+const { updates, counts, total, active, title, lede } = Astro.props;
+---
+
+<PageHeader eyebrow="Updates" title={title} lede={lede} />
+
+<section class="section updates" aria-labelledby="updates-list-title">
+  <div class="container">
+    <nav class="filters" aria-label="Filter updates by category">
+      <ul role="list">
+        <li>
+          <a href={url('/updates/')} aria-current={!active ? 'page' : undefined}>
+            All <span class="filters__count">({total})</span>
+          </a>
+        </li>
+        {
+          updateCategories
+            .filter((category) => counts[category] > 0 || category === active)
+            .map((category) => (
+              <li>
+                <a
+                  href={url(`/updates/category/${categorySlug(category)}/`)}
+                  aria-current={active === category ? 'page' : undefined}
+                >
+                  {category} <span class="filters__count">({counts[category]})</span>
+                </a>
+              </li>
+            ))
+        }
+      </ul>
+    </nav>
+
+    <h2 id="updates-list-title" class="visually-hidden">
+      {active ? `${active} updates` : 'All updates'}, newest first
+    </h2>
+
+    {
+      updates.length > 0 ? (
+        <UpdateList updates={updates} headingLevel="h3" />
+      ) : (
+        <div class="empty">
+          <p>
+            There are no {active ? active.toLowerCase() : ''} updates yet.{' '}
+            <a href={url('/updates/')}>See all updates</a>.
+          </p>
+        </div>
+      )
+    }
+
+    <p class="feed">
+      Prefer to follow along in a feed reader? <a href={url('/rss.xml')}>Subscribe by RSS</a>.
+    </p>
+  </div>
+</section>
+
+<style>
+  .filters {
+    margin-bottom: var(--space-l);
+  }
+
+  .filters ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-l);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .filters a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    min-height: 2.75rem;
+    color: var(--blue-deep);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+  }
+
+  .filters a:hover {
+    color: var(--blue);
+    border-bottom-color: var(--blue);
+  }
+
+  .filters a[aria-current='page'] {
+    border-bottom-color: var(--amber);
+  }
+
+  .filters__count {
+    font-weight: 400;
+    color: var(--text-muted);
+  }
+
+  .empty {
+    padding: var(--space-l) 0;
+    border-top: 2px solid var(--blue-deep);
+  }
+
+  .feed {
+    margin-top: var(--space-l);
+    font-size: var(--step--1);
+    color: var(--text-muted);
+  }
+</style>

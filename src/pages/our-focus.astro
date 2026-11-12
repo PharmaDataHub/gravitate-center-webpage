@@ -1,0 +1,226 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import FocusIcon from '../components/FocusIcon.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { focusAreas } from '../data/focus';
+---
+
+<BaseLayout
+  title="Our focus"
+  description="Gravitate's four areas of focus: health literacy, connected information and ePI, co-design, and shared learning and evaluation."
+>
+  <PageHeader
+    eyebrow="Our focus"
+    title="Where we put our effort"
+    lede="Four connected areas of work, each explained in plain language. For each, we set out what already exists and what Gravitate aims to do, so it is clear which is which."
+  >
+    <nav class="toc" aria-label="On this page">
+      <ol role="list">
+        {focusAreas.map((area) => (
+          <li>
+            <a href={`#${area.id}`}>{area.title}</a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+  </PageHeader>
+
+  {
+    focusAreas.map((area, index) => (
+      <section
+        id={area.id}
+        class:list={['section', 'focus-area', { 'section--mist': index % 2 === 1 }]}
+        aria-labelledby={`${area.id}-title`}
+      >
+        <div class="container focus-area__grid">
+          <div class="focus-area__head">
+            <FocusIcon name={area.icon} />
+            <p class="focus-area__number" aria-hidden="true">0{index + 1}</p>
+            <h2 id={`${area.id}-title`}>{area.title}</h2>
+          </div>
+          <div class="focus-area__body">
+            <p class="lede">{area.intro}</p>
+
+            <h3>What this could look like</h3>
+            <ul class="examples">
+              {area.examples.map((example) => (
+                <li>{example}</li>
+              ))}
+            </ul>
+
+            <div class="status">
+              <div class="status__item">
+                <h3 class="status__label">What already exists</h3>
+                <p>{area.foundation}</p>
+              </div>
+              <div class="status__item status__item--ambition">
+                <h3 class="status__label">What Gravitate aims to do</h3>
+                <p>{area.ambition}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <section class="section" aria-labelledby="honesty-title">
+    <div class="container">
+      <div class="honesty">
+        <h2 id="honesty-title">A note on where we are</h2>
+        <p>
+          Gravitate is a new centre. We are not yet offering services, and we do not claim results
+          beyond those published by the Gravitate-Health project and others. As work with partners
+          begins, we will report what we do and what we find in our updates.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Help shape the work ahead"
+    text="Priorities are set with partners. If one of these areas matters to your organisation or community, we would like to hear from you."
+  />
+</BaseLayout>
+
+<style>
+  .toc {
+    margin-top: var(--space-l);
+  }
+
+  .toc ol {
+    display: grid;
+    gap: 0 var(--space-l);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: toc;
+    border-top: 1px solid var(--blue-line);
+  }
+
+  @media (min-width: 48em) {
+    .toc ol {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .toc li {
+    counter-increment: toc;
+    border-bottom: 1px solid var(--blue-line);
+  }
+
+  .toc a {
+    display: flex;
+    gap: var(--space-s);
+    align-items: center;
+    min-height: 3rem;
+    padding-block: var(--space-xs);
+    color: var(--blue-deep);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .toc a::before {
+    content: '0' counter(toc);
+    font-family: var(--font-display-stack);
+    color: var(--blue);
+    font-weight: 500;
+  }
+
+  .toc a:hover {
+    color: var(--blue);
+    text-decoration: underline;
+  }
+
+  .focus-area__grid {
+    display: grid;
+    gap: var(--space-l);
+  }
+
+  @media (min-width: 56em) {
+    .focus-area__grid {
+      grid-template-columns: 1fr 1.6fr;
+      gap: var(--space-2xl);
+    }
+
+    .focus-area__head {
+      position: sticky;
+      top: calc(var(--header-height) + var(--space-l));
+      align-self: start;
+    }
+  }
+
+  .focus-area__number {
+    font-family: var(--font-display-stack);
+    font-size: var(--step-1);
+    color: var(--blue);
+    margin: var(--space-m) 0 var(--space-xs);
+  }
+
+  .focus-area__body {
+    max-width: 44rem;
+  }
+
+  .focus-area__body h3 {
+    margin-top: var(--space-l);
+  }
+
+  .examples {
+    padding-left: 1.2em;
+  }
+
+  .examples li + li {
+    margin-top: var(--space-xs);
+  }
+
+  .examples li::marker {
+    color: var(--blue);
+  }
+
+  .status {
+    display: grid;
+    gap: var(--space-m);
+    margin-top: var(--space-l);
+  }
+
+  @media (min-width: 40em) {
+    .status {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .status__item {
+    padding-top: var(--space-s);
+    border-top: 2px solid var(--blue-line);
+  }
+
+  .status__item--ambition {
+    border-top-color: var(--amber);
+  }
+
+  .status__label {
+    margin: 0 0 var(--space-xs) !important;
+    font-size: var(--step--1);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .status__item p {
+    margin: 0;
+  }
+
+  .honesty {
+    max-width: 44rem;
+    padding-left: var(--space-l);
+    border-left: 4px solid var(--blue);
+  }
+
+  .honesty h2 {
+    font-size: var(--step-2);
+  }
+
+  .honesty p {
+    margin: 0;
+  }
+</style>

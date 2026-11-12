@@ -1,0 +1,359 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { Image, getImage } from 'astro:assets';
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import UpdateList from '../../components/UpdateList.astro';
+import {
+  categorySlug,
+  formatDate,
+  formatEventDates,
+  getUpdates,
+  isoDate,
+  isPublished,
+  relatedUpdates,
+} from '../../lib/updates';
+import { site } from '../../config/site';
+import { absoluteUrl, url } from '../../lib/url';
+
+export const getStaticPaths = (async () => {
+  const updates = await getUpdates();
+  return updates.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry, related: relatedUpdates(entry, updates) },
+  }));
+}) satisfies GetStaticPaths;
+
+const { entry, related } = Astro.props;
+const { Content } = await render(entry);
+const { title, description, pubDate, updatedDate, category, author, image, imageAlt, event, draft, sources } =
+  entry.data;
+
+const socialImage = image ? (await getImage({ src: image, width: 1200, format: 'jpeg' })).src : undefined;
+const scheduled = !draft && !isPublished(entry);
+
+const ctaByCategory = {
+  Events: {
+    title: 'Want to be part of what comes next?',
+    text: 'Events are one way in. If you would like to collaborate more closely, start with a conversation.',
+  },
+  Opportunities: {
+    title: 'Interested in taking part?',
+    text: 'Tell us about your organisation and what you could bring. We will help you find the right way in.',
+  },
+  Insights: {
+    title: 'Is this a problem you are working on too?',
+    text: 'We bring together people who want to make medicines information clearer and better connected.',
+  },
+  News: {
+    title: 'Help shape what Gravitate does next',
+    text: 'Patient groups, clinicians, researchers, industry and standards bodies are all welcome.',
+  },
+} as const;
+
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description,
+  datePublished: pubDate.toISOString(),
+  ...(updatedDate && { dateModified: updatedDate.toISOString() }),
+  ...(author && { author: { '@type': 'Person', name: author } }),
+  publisher: { '@type': 'Organization', name: site.name, url: absoluteUrl('/', Astro.site) },
+  mainEntityOfPage: absoluteUrl(`/updates/${entry.id}/`, Astro.site),
+  ...(socialImage && { image: new URL(socialImage, Astro.site).href }),
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  type="article"
+  image={socialImage}
+  publishedTime={pubDate}
+  modifiedTime={updatedDate}
+  noindex={draft || scheduled}
+  jsonLd={[articleJsonLd]}
+>
+  <article class="article" aria-labelledby="article-title">
+    <header class="article__header">
+      <div class="container article__header-inner">
+        <a class="back-link" href={url('/updates/')}>
+          <span aria-hidden="true">←</span> All updates
+        </a>
+        {
+          (draft || scheduled) && (
+            <p class="preview-flag" role="note">
+              {draft ? 'Draft preview: this update is not published.' : `Scheduled: this update will appear on ${formatDate(pubDate)}.`}
+            </p>
+          )
+        }
+        <p class="article__category">
+          <a href={url(`/updates/category/${categorySlug(category)}/`)}>{category}</a>
+        </p>
+        <h1 id="article-title">{title}</h1>
+        <p class="lede">{description}</p>
+        <dl class="article__meta">
+          <div>
+            <dt>Published</dt>
+            <dd><time datetime={isoDate(pubDate)}>{formatDate(pubDate)}</time></dd>
+          </div>
+          {
+            updatedDate && (
+              <div>
+                <dt>Updated</dt>
+                <dd><time datetime={isoDate(updatedDate)}>{formatDate(updatedDate)}</time></dd>
+              </div>
+            )
+          }
+          {
+            author && (
+              <div>
+                <dt>Author</dt>
+                <dd>{author}</dd>
+              </div>
+            )
+          }
+        </dl>
+      </div>
+    </header>
+
+    {
+      image && (
+        <figure class="container article__cover">
+          <Image
+            src={image}
+            alt={imageAlt ?? ''}
+            widths={[480, 800, 1200, 1600]}
+            sizes="(min-width: 74rem) 70rem, 100vw"
+            loading="eager"
+            fetchpriority="high"
+          />
+        </figure>
+      )
+    }
+
+    <div class="container article__layout">
+      {
+        event && (
+          <aside class="event-box" aria-labelledby="event-box-title">
+            <h2 id="event-box-title">Event details</h2>
+            <dl>
+              <div>
+                <dt>When</dt>
+                <dd>
+                  <time datetime={isoDate(event.start)}>{formatEventDates(event.start, event.end)}</time>
+                </dd>
+              </div>
+              {(event.location || event.online) && (
+                <div>
+                  <dt>Where</dt>
+                  <dd>
+                    {event.location}
+                    {event.location && event.online && ' and online'}
+                    {!event.location && event.online && 'Online'}
+                  </dd>
+                </div>
+              )}
+            </dl>
+            {event.registrationUrl && (
+              <a class="button button--accent" href={event.registrationUrl}>
+                Register for this event <span class="arrow" aria-hidden="true">↗</span>
+              </a>
+            )}
+          </aside>
+        )
+      }
+
+      <div class="prose article__body">
+        <Content />
+      </div>
+
+      {
+        sources.length > 0 && (
+          <section class="sources" aria-labelledby="sources-title">
+            <h2 id="sources-title">Sources</h2>
+            <ul>
+              {sources.map((source) => (
+                <li>
+                  <a href={source.url}>{source.title}</a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
+    </div>
+  </article>
+
+  {
+    related.length > 0 && (
+      <section class="section section--mist" aria-labelledby="related-title">
+        <div class="container">
+          <h2 id="related-title">More updates</h2>
+          <UpdateList updates={related} showImages={false} compact />
+          <p>
+            <a class="link-arrow" href={url('/updates/')}>
+              <span aria-hidden="true">←</span> Back to all updates
+            </a>
+          </p>
+        </div>
+      </section>
+    )
+  }
+
+  <CtaBand title={ctaByCategory[category].title} text={ctaByCategory[category].text} />
+</BaseLayout>
+
+<style>
+  .article__header {
+    padding-block: var(--space-xl) var(--space-l);
+    background: var(--mist);
+    border-bottom: 1px solid var(--blue-line);
+  }
+
+  .article__header-inner {
+    max-width: calc(var(--measure) + var(--gutter) * 2);
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    min-height: 2.75rem;
+    margin-bottom: var(--space-m);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .back-link:hover {
+    text-decoration: underline;
+  }
+
+  .preview-flag {
+    display: inline-block;
+    padding: var(--space-xs) var(--space-s);
+    background: var(--amber);
+    color: var(--blue-deep);
+    font-weight: 700;
+  }
+
+  .article__category {
+    margin-bottom: var(--space-s);
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .article__category a {
+    color: var(--blue-deep);
+    text-decoration: none;
+    border-bottom: 3px solid var(--amber);
+  }
+
+  h1 {
+    font-size: var(--step-4);
+    max-width: 22ch;
+  }
+
+  .lede {
+    max-width: var(--measure);
+  }
+
+  .article__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-xl);
+    margin: var(--space-l) 0 0;
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--blue-line);
+    font-size: var(--step--1);
+  }
+
+  .article__meta dt {
+    font-weight: 700;
+    color: var(--blue-deep);
+  }
+
+  .article__meta dd {
+    margin: 0;
+    color: var(--text-muted);
+  }
+
+  .article__cover {
+    margin-block: var(--space-l) 0;
+  }
+
+  .article__cover :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+  }
+
+  .article__layout {
+    max-width: calc(var(--measure) + var(--gutter) * 2);
+    padding-block: var(--space-xl) var(--space-2xl);
+  }
+
+  .event-box {
+    margin-bottom: var(--space-l);
+    padding: var(--space-m) var(--space-l);
+    border-top: 4px solid var(--amber);
+    background: var(--mist);
+  }
+
+  .event-box h2 {
+    font-family: var(--font-body-stack);
+    font-size: var(--step-0);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-s);
+  }
+
+  .event-box dl {
+    display: grid;
+    gap: var(--space-xs);
+  }
+
+  .event-box dl div {
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+  }
+
+  .event-box dt {
+    font-weight: 700;
+    color: var(--blue-deep);
+  }
+
+  .event-box dd {
+    margin: 0;
+  }
+
+  .sources {
+    margin-top: var(--space-xl);
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--blue-line);
+    font-size: var(--step--1);
+  }
+
+  .sources h2 {
+    font-family: var(--font-body-stack);
+    font-size: var(--step-0);
+    font-weight: 700;
+  }
+
+  .sources ul {
+    padding-left: 1.1em;
+  }
+
+  .sources li + li {
+    margin-top: var(--space-xs);
+  }
+
+  #related-title {
+    font-size: var(--step-2);
+  }
+</style>

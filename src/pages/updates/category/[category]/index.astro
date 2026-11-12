@@ -1,0 +1,48 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import UpdatesIndex from '../../../../components/UpdatesIndex.astro';
+import {
+  categoryDescriptions,
+  updateCategories,
+  type UpdateCategory,
+} from '../../../../config/site';
+import { categorySlug, getUpdates } from '../../../../lib/updates';
+
+export const getStaticPaths = (async () => {
+  const updates = await getUpdates();
+  const counts = Object.fromEntries(
+    updateCategories.map((category) => [
+      category,
+      updates.filter((entry) => entry.data.category === category).length,
+    ]),
+  ) as Record<UpdateCategory, number>;
+
+  // Only categories with at least one visible update get a page.
+  return updateCategories.filter((category) => counts[category] > 0).map((category) => ({
+    params: { category: categorySlug(category) },
+    props: {
+      category,
+      counts,
+      total: updates.length,
+      updates: updates.filter((entry) => entry.data.category === category),
+    },
+  }));
+}) satisfies GetStaticPaths;
+
+const { category, counts, total, updates } = Astro.props;
+---
+
+<BaseLayout
+  title={`${category} · Updates`}
+  description={categoryDescriptions[category]}
+>
+  <UpdatesIndex
+    updates={updates}
+    counts={counts}
+    total={total}
+    active={category}
+    title={category}
+    lede={categoryDescriptions[category]}
+  />
+</BaseLayout>

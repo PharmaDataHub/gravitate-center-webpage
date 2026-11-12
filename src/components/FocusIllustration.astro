@@ -1,0 +1,191 @@
+---
+/*
+ * Hero illustration: "focus, not filter".
+ * A medicine leaflet sits at the centre; every line remains visible, while the
+ * line most relevant to the reader is brought into focus (amber). Around it,
+ * the communities that make trustworthy information possible orbit the same centre.
+ */
+const nodes = [
+  { label: 'Patients & carers', angle: -90, ring: 225, size: 13, accent: true },
+  { label: 'Clinicians', angle: -18, ring: 225, size: 9 },
+  { label: 'Pharmacists', angle: 40, ring: 160, size: 8 },
+  { label: 'Researchers', angle: 112, ring: 225, size: 9 },
+  { label: 'Industry', angle: 175, ring: 160, size: 8 },
+  { label: 'Standards & regulators', angle: 220, ring: 225, size: 9 },
+];
+const cx = 260;
+const cy = 260;
+const toXY = (angle: number, r: number) => {
+  const rad = (angle * Math.PI) / 180;
+  return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+};
+---
+
+<figure class="focus-illustration">
+  <svg
+    viewBox="-120 0 760 520"
+    width="760"
+    height="520"
+    role="img"
+    aria-labelledby="focus-illustration-title focus-illustration-desc"
+  >
+    <title id="focus-illustration-title">Focus, not filter</title>
+    <desc id="focus-illustration-desc">
+      A medicine leaflet at the centre with one line highlighted and all other lines still visible.
+      Patients and carers, clinicians, pharmacists, researchers, industry, and standards bodies and
+      regulators circle the same centre.
+    </desc>
+
+    <g class="rings" fill="none">
+      <circle cx={cx} cy={cy} r="225" class="ring ring--outer"></circle>
+      <circle cx={cx} cy={cy} r="160" class="ring"></circle>
+      <circle cx={cx} cy={cy} r="98" class="ring ring--inner"></circle>
+    </g>
+
+    <g class="orbit">
+      {
+        nodes.map((node) => {
+          const { x, y } = toXY(node.angle, node.ring);
+          const right = x >= cx;
+          const below = y > cy;
+          return (
+            <g class:list={['node', { 'node--accent': node.accent }]}>
+              <line x1={cx} y1={cy} x2={x} y2={y} class="spoke" />
+              <circle cx={x} cy={y} r={node.size} class="node__dot" />
+              <text
+                x={node.angle === -90 ? x : right ? x + node.size + 8 : x - node.size - 8}
+                y={node.angle === -90 ? y - node.size - 10 : below ? y + 18 : y - 4}
+                text-anchor={node.angle === -90 ? 'middle' : right ? 'start' : 'end'}
+                class="node__label"
+              >
+                {node.label}
+              </text>
+            </g>
+          );
+        })
+      }
+    </g>
+
+    <g class="leaflet" transform="translate(205 190)">
+      <rect width="110" height="140" rx="4" class="leaflet__page"></rect>
+      <rect x="16" y="18" width="52" height="8" rx="2" class="leaflet__title"></rect>
+      <rect x="16" y="40" width="78" height="5" rx="2" class="leaflet__line"></rect>
+      <rect x="16" y="53" width="70" height="5" rx="2" class="leaflet__line"></rect>
+      <rect x="10" y="66" width="90" height="17" rx="2" class="leaflet__focus"></rect>
+      <rect x="16" y="72" width="74" height="5" rx="2" class="leaflet__line leaflet__line--focus"></rect>
+      <rect x="16" y="92" width="78" height="5" rx="2" class="leaflet__line"></rect>
+      <rect x="16" y="105" width="60" height="5" rx="2" class="leaflet__line"></rect>
+      <rect x="16" y="118" width="72" height="5" rx="2" class="leaflet__line"></rect>
+    </g>
+  </svg>
+</figure>
+
+<style>
+  .focus-illustration {
+    margin: 0;
+    width: 100%;
+    max-width: 40rem;
+    margin-inline: auto;
+  }
+
+  svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .ring {
+    stroke: var(--blue);
+    stroke-width: 1.5;
+    opacity: 0.35;
+  }
+
+  .ring--outer {
+    stroke-dasharray: 2 7;
+    opacity: 0.55;
+  }
+
+  .ring--inner {
+    fill: var(--blue-tint);
+    opacity: 0.6;
+    stroke: none;
+  }
+
+  .spoke {
+    stroke: var(--blue);
+    stroke-width: 1;
+    opacity: 0.18;
+  }
+
+  .node__dot {
+    fill: var(--blue);
+  }
+
+  .node--accent .node__dot {
+    fill: var(--amber);
+    stroke: var(--blue-deep);
+    stroke-width: 2;
+  }
+
+  .node__label {
+    fill: var(--blue-deep);
+    font-family: var(--font-body-stack);
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  .leaflet__page {
+    fill: var(--white);
+    stroke: var(--blue-deep);
+    stroke-width: 2;
+    filter: drop-shadow(0 10px 18px rgb(16 42 67 / 0.15));
+  }
+
+  .leaflet__title {
+    fill: var(--blue-deep);
+  }
+
+  .leaflet__line {
+    fill: var(--blue-line);
+  }
+
+  .leaflet__focus {
+    fill: var(--amber);
+  }
+
+  .leaflet__line--focus {
+    fill: var(--blue-deep);
+  }
+
+  @media (max-width: 30em) {
+    .node__label {
+      font-size: 26px;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .orbit {
+      transform-origin: 260px 260px;
+      animation: settle 1.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    }
+
+    .leaflet__focus {
+      transform-box: fill-box;
+      transform-origin: left center;
+      animation: focus-in 0.9s 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    }
+
+    @keyframes settle {
+      from {
+        opacity: 0;
+        transform: rotate(-8deg) scale(0.96);
+      }
+    }
+
+    @keyframes focus-in {
+      from {
+        transform: scaleX(0);
+      }
+    }
+  }
+</style>

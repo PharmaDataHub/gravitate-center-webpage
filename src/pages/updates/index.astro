@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import UpdatesIndex from '../../components/UpdatesIndex.astro';
+import { updateCategories, type UpdateCategory } from '../../config/site';
+import { getUpdates } from '../../lib/updates';
+
+const updates = await getUpdates();
+const counts = Object.fromEntries(
+  updateCategories.map((category) => [
+    category,
+    updates.filter((entry) => entry.data.category === category).length,
+  ]),
+) as Record<UpdateCategory, number>;
+---
+
+<BaseLayout
+  title="Updates"
+  description="News, insights, events and opportunities from Gravitate, the centre for trustworthy health information."
+>
+  <UpdatesIndex
+    updates={updates}
+    counts={counts}
+    total={updates.length}
+    title="News, insights and opportunities"
+    lede="What we are working on, what we are learning, and where you can take part."
+  />
+</BaseLayout>

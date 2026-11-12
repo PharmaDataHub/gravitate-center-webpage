@@ -1,0 +1,87 @@
+---
+/*
+ * Primary contact action. Uses the verified email in src/config/site.ts.
+ * If no email is configured, renders an honest "contact details coming soon" state —
+ * never a form that pretends to submit.
+ */
+import { contact } from '../config/site';
+
+interface Props {
+  subject?: string;
+  label?: string;
+  variant?: 'accent' | 'outline' | 'default';
+  /** Suggested body text for the email. */
+  body?: string;
+}
+
+const {
+  subject = contact.partnershipSubject,
+  label = 'Email us about a partnership',
+  variant = 'accent',
+  body,
+} = Astro.props;
+
+const params = new URLSearchParams({ subject });
+if (body) params.set('body', body);
+const href = contact.email
+  ? `mailto:${contact.email}?${params.toString().replace(/\+/g, '%20')}`
+  : null;
+const variantClass = variant === 'default' ? '' : `button--${variant}`;
+---
+
+{
+  href ? (
+    <div class="contact-action">
+      <a class:list={['button', variantClass]} href={href}>
+        {label}
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <p class="contact-action__address">
+        Or write to <a href={`mailto:${contact.email}`}>{contact.email}</a>
+      </p>
+    </div>
+  ) : (
+    <div class="contact-pending" role="note">
+      <p class="contact-pending__title">Contact details are on their way</p>
+      <p>
+        We are setting up a dedicated, monitored inbox for Gravitate and will publish it here as
+        soon as it is ready. We will not ask you to submit details through a form we cannot yet
+        respond to.
+      </p>
+    </div>
+  )
+}
+
+<style>
+  .contact-action__address {
+    margin: var(--space-s) 0 0;
+    font-size: var(--step--1);
+  }
+
+  .contact-pending {
+    max-width: 36rem;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-l);
+    border-left: 4px solid var(--amber);
+    background: var(--white);
+    color: var(--text);
+  }
+
+  .contact-pending p:last-child {
+    margin-bottom: 0;
+  }
+
+  .contact-pending__title {
+    margin-bottom: var(--space-xs);
+    font-weight: 700;
+    color: var(--blue-deep);
+  }
+
+  :global(.section--deep) .contact-pending {
+    background: var(--blue-deep-80);
+    color: var(--text-on-dark);
+  }
+
+  :global(.section--deep) .contact-pending__title {
+    color: var(--white);
+  }
+</style>

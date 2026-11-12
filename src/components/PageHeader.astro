@@ -1,0 +1,67 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lede?: string;
+}
+const { eyebrow, title, lede } = Astro.props;
+---
+
+<header class="page-header">
+  <div class="container page-header__inner">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h1>{title}</h1>
+    {lede && <p class="lede">{lede}</p>}
+    <slot />
+  </div>
+</header>
+
+<style>
+  .page-header {
+    position: relative;
+    padding-block: var(--space-2xl) var(--space-xl);
+    background:
+      radial-gradient(circle at 92% 20%, var(--blue-tint) 0 9rem, transparent 9.05rem),
+      var(--mist);
+    border-bottom: 1px solid var(--blue-line);
+    overflow: hidden;
+  }
+
+  .page-header::after {
+    /* Faint orbit lines echoing the identity mark. */
+    content: '';
+    position: absolute;
+    right: -6rem;
+    top: -8rem;
+    width: 28rem;
+    height: 28rem;
+    border: 1px solid var(--blue-line);
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 4rem transparent,
+      0 0 0 4.06rem var(--blue-line);
+    pointer-events: none;
+  }
+
+  .page-header__inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  h1 {
+    max-width: 18ch;
+    font-size: var(--step-5);
+  }
+
+  .lede {
+    max-width: 44rem;
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 40em) {
+    .page-header::after {
+      right: -14rem;
+      top: -12rem;
+    }
+  }
+</style>

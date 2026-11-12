@@ -1,0 +1,410 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FocusIllustration from '../components/FocusIllustration.astro';
+import FocusIcon from '../components/FocusIcon.astro';
+import UpdateList from '../components/UpdateList.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { focusAreas } from '../data/focus';
+import { audiences } from '../data/audiences';
+import { legacy } from '../config/site';
+import { getLatestUpdates } from '../lib/updates';
+import { url } from '../lib/url';
+
+const latest = await getLatestUpdates(3);
+---
+
+<BaseLayout>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="container hero__inner">
+      <div class="hero__text reveal">
+        <p class="eyebrow">A centre for trustworthy health information</p>
+        <h1 id="hero-title">
+          Medicines information people can <em>understand</em>, and trust.
+        </h1>
+        <p class="lede">
+          Gravitate brings patients, health professionals, researchers, industry and standards
+          bodies together to make approved medicines information clearer, better connected and
+          more useful in everyday life. Good information needs many hands. We would like yours.
+        </p>
+        <div class="button-row">
+          <a class="button button--accent" href={url('/collaborate/')}>
+            Explore a partnership <span class="arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="button button--outline" href={url('/about/')}>Discover our mission</a>
+        </div>
+      </div>
+      <div class="hero__art">
+        <FocusIllustration />
+      </div>
+    </div>
+  </section>
+
+  <section class="section mission" aria-labelledby="mission-title">
+    <div class="container mission__grid">
+      <div>
+        <p class="eyebrow">Why we exist</p>
+        <h2 id="mission-title">The information is approved. It isn’t always usable.</h2>
+      </div>
+      <div class="mission__text">
+        <p class="lede">
+          Every medicine in Europe comes with information that regulators have checked: the package
+          leaflet and the professional summary behind it. It is accurate, but often long, dense and
+          hard to relate to your own situation, while the wider internet offers endless advice of
+          uncertain quality.
+        </p>
+        <p>
+          Gravitate exists to close that gap for the public good. We work on how trusted
+          information can reach people in a form they can use: easier to read, connected to the
+          systems that carry it, and designed with the people who depend on it. No single
+          organisation can do this alone, so collaboration sits at the heart of everything we do.
+        </p>
+        <a class="link-arrow" href={url('/about/')}>
+          Read about our mission and values <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--mist" aria-labelledby="focus-title">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Our focus</p>
+        <h2 id="focus-title">Four areas where working together makes the difference</h2>
+      </div>
+      <ol class="focus-grid" role="list">
+        {
+          focusAreas.map((area, index) => (
+            <li class="focus-item">
+              <FocusIcon name={area.icon} />
+              <span class="focus-item__number" aria-hidden="true">
+                0{index + 1}
+              </span>
+              <h3>
+                <a href={url(`/our-focus/#${area.id}`)}>{area.title}</a>
+              </h3>
+              <p>{area.summary}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="contribute-title">
+    <div class="container contribute">
+      <div class="contribute__intro">
+        <p class="eyebrow">Ways to contribute</p>
+        <h2 id="contribute-title">Everyone who shapes medicines information has a part to play</h2>
+        <p>
+          Gravitate is open to organisations and communities who share the goal of trustworthy,
+          understandable health information. Here is where different partners can make the
+          biggest difference.
+        </p>
+        <a class="button" href={url('/collaborate/')}>
+          See how to get involved <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+      <dl class="audience-list">
+        {
+          audiences.map((audience) => (
+            <div class="audience-list__row">
+              <dt>{audience.name}</dt>
+              <dd>{audience.contribute}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <section class="section section--deep legacy" aria-labelledby="legacy-title">
+    <div class="container legacy__grid">
+      <div>
+        <p class="eyebrow">Our roots</p>
+        <h2 id="legacy-title">Building on Gravitate-Health</h2>
+      </div>
+      <div>
+        <p class="lede">
+          Gravitate grows out of {legacy.name}, a European public–private research project that ran
+          from 2020 to 2026. Its central idea was simple and lasting: digital tools should bring
+          approved medicines information into <em>focus</em> for each person, without concealing or
+          filtering any of it.
+        </p>
+        <p>
+          We carry that idea forward as an ongoing, collaborative centre, so the knowledge,
+          standards work and relationships built during the project keep serving the public.
+        </p>
+        <div class="button-row">
+          <a class="link-arrow" href={url('/about/#legacy')}>
+            How Gravitate relates to the project <span aria-hidden="true">→</span>
+          </a>
+          <a class="link-arrow" href={legacy.url}>
+            Visit the Gravitate-Health website <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {
+    latest.length > 0 && (
+      <section class="section" aria-labelledby="updates-title">
+        <div class="container">
+          <div class="updates-head">
+            <div>
+              <p class="eyebrow">What’s happening</p>
+              <h2 id="updates-title">Latest updates</h2>
+            </div>
+            <a class="link-arrow" href={url('/updates/')}>
+              All updates <span aria-hidden="true">→</span>
+            </a>
+          </div>
+          <UpdateList updates={latest} showImages={false} />
+        </div>
+      </section>
+    )
+  }
+
+  <CtaBand
+    title="Let’s make trusted information work for everyone"
+    text="Tell us what you could bring, or what you need. A first conversation is the simplest way to see whether we can achieve more together."
+  />
+</BaseLayout>
+
+<style>
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    padding-block: var(--space-xl) var(--space-2xl);
+    background: linear-gradient(180deg, var(--mist) 0%, var(--white) 85%);
+    overflow: hidden;
+  }
+
+  .hero__inner {
+    display: grid;
+    gap: var(--space-l);
+    align-items: center;
+  }
+
+  @media (min-width: 60em) {
+    .hero {
+      padding-block: var(--space-2xl);
+    }
+
+    .hero__inner {
+      grid-template-columns: 1.15fr 1fr;
+      gap: var(--space-xl);
+    }
+  }
+
+  .hero h1 {
+    font-size: var(--step-5);
+    line-height: 1.04;
+    max-width: 15ch;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--blue);
+  }
+
+  .hero .lede {
+    max-width: 36rem;
+    margin-bottom: var(--space-l);
+  }
+
+  .hero__art {
+    max-width: 28rem;
+    width: 100%;
+    margin-inline: auto;
+  }
+
+  @media (min-width: 60em) {
+    .hero__art {
+      max-width: none;
+    }
+  }
+
+  @media (max-width: 30em) {
+    .hero .button-row .button {
+      width: 100%;
+    }
+  }
+
+  /* ---------- Mission ---------- */
+  .mission__grid {
+    display: grid;
+    gap: var(--space-l);
+  }
+
+  @media (min-width: 56em) {
+    .mission__grid {
+      grid-template-columns: 1fr 1.25fr;
+      gap: var(--space-2xl);
+    }
+  }
+
+  .mission h2 {
+    font-size: var(--step-3);
+    max-width: 16ch;
+  }
+
+  /* ---------- Focus ---------- */
+  .focus-grid {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 2px solid var(--blue-deep);
+  }
+
+  @media (min-width: 40em) {
+    .focus-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 70em) {
+    .focus-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .focus-item {
+    position: relative;
+    padding: var(--space-l) var(--space-m) var(--space-l) 0;
+    border-bottom: 1px solid var(--blue-line);
+  }
+
+  @media (min-width: 40em) {
+    .focus-item {
+      padding-inline: var(--space-m);
+      border-right: 1px solid var(--blue-line);
+    }
+  }
+
+  .focus-item__number {
+    position: absolute;
+    top: var(--space-l);
+    right: var(--space-m);
+    font-family: var(--font-display-stack);
+    font-size: var(--step-2);
+    color: var(--blue-line);
+  }
+
+  .focus-item h3 {
+    margin-top: var(--space-m);
+  }
+
+  .focus-item h3 a {
+    color: var(--blue-deep);
+    text-decoration: none;
+  }
+
+  .focus-item h3 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .focus-item:hover h3 a {
+    color: var(--blue);
+    text-decoration: underline;
+  }
+
+  .focus-item:focus-within {
+    outline: var(--focus-ring);
+    outline-offset: -3px;
+  }
+
+  .focus-item h3 a:focus-visible {
+    outline: none;
+  }
+
+  .focus-item p {
+    margin: 0;
+    color: var(--text);
+  }
+
+  /* ---------- Contribute ---------- */
+  .contribute {
+    display: grid;
+    gap: var(--space-xl);
+  }
+
+  @media (min-width: 56em) {
+    .contribute {
+      grid-template-columns: 1fr 1.4fr;
+      gap: var(--space-2xl);
+    }
+
+    .contribute__intro {
+      position: sticky;
+      top: calc(var(--header-height) + var(--space-l));
+      align-self: start;
+    }
+  }
+
+  .audience-list {
+    margin: 0;
+    border-top: 2px solid var(--blue-deep);
+  }
+
+  .audience-list__row {
+    display: grid;
+    gap: var(--space-2xs) var(--space-l);
+    padding-block: var(--space-m);
+    border-bottom: 1px solid var(--blue-line);
+  }
+
+  @media (min-width: 40em) {
+    .audience-list__row {
+      grid-template-columns: 13rem 1fr;
+    }
+  }
+
+  .audience-list dt {
+    font-weight: 700;
+    color: var(--blue-deep);
+  }
+
+  .audience-list dd {
+    margin: 0;
+  }
+
+  /* ---------- Legacy ---------- */
+  .legacy__grid {
+    display: grid;
+    gap: var(--space-l);
+  }
+
+  @media (min-width: 56em) {
+    .legacy__grid {
+      grid-template-columns: 1fr 1.4fr;
+      gap: var(--space-2xl);
+    }
+  }
+
+  .legacy .lede {
+    color: var(--text-on-dark);
+  }
+
+  .legacy .button-row {
+    gap: var(--space-xs) var(--space-l);
+  }
+
+  /* ---------- Updates ---------- */
+  .updates-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-s) var(--space-l);
+    margin-bottom: var(--space-l);
+  }
+
+  .updates-head h2 {
+    margin-bottom: 0;
+  }
+</style>

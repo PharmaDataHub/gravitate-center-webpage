@@ -1,0 +1,280 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { legacy } from '../config/site';
+import { url } from '../lib/url';
+
+const values = [
+  {
+    name: 'Accessibility',
+    text: 'Information is only useful if people can reach it and make sense of it. We design for different abilities, languages, ages and levels of confidence.',
+  },
+  {
+    name: 'Collaboration',
+    text: 'The problems we work on cross organisational boundaries. We bring people together as equals and share credit generously.',
+  },
+  {
+    name: 'Transparency',
+    text: 'We are open about who we work with, how decisions are made and what we know and do not yet know.',
+  },
+  {
+    name: 'Evidence',
+    text: 'We test ideas, measure what matters and say clearly when something has not yet been shown to work.',
+  },
+  {
+    name: 'Person-centred design',
+    text: 'We start from the needs of the people who take medicines and those who care for them, and involve them throughout.',
+  },
+];
+---
+
+<BaseLayout
+  title="About"
+  description="Gravitate's mission, vision and values, the need it addresses, and how it builds on the Gravitate-Health project."
+>
+  <PageHeader
+    eyebrow="About Gravitate"
+    title="Trustworthy information is a shared responsibility"
+    lede="Gravitate is a mission-driven centre that brings together the many people and organisations who shape medicines information, so that it serves the people who rely on it."
+  />
+
+  <section class="section" aria-labelledby="mission-title">
+    <div class="container two-col">
+      <div>
+        <h2 id="mission-title">Mission and vision</h2>
+      </div>
+      <div class="statements">
+        <div class="statement">
+          <p class="statement__label">Our mission</p>
+          <p class="statement__text">
+            To help people find, understand and use trusted information about their medicines and
+            health, by working with everyone who creates, manages and depends on that information.
+          </p>
+        </div>
+        <div class="statement">
+          <p class="statement__label">Our vision</p>
+          <p class="statement__text">
+            A future where approved health information is clear, current and connected to each
+            person’s situation, and where patients help shape it.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--mist" aria-labelledby="need-title">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">The need</p>
+        <h2 id="need-title">Why this work matters</h2>
+      </div>
+      <div class="prose">
+        <p class="lede">
+          Taking a medicine safely depends on understanding it: how and when to take it, what to
+          watch out for, and what to do if something goes wrong.
+        </p>
+        <p>
+          The approved information that comes with every medicine is written with great care. Yet
+          it is often long and technical, rarely tailored to the reader, and mostly still designed
+          for paper. People turn instead to search engines and social media, where quality varies
+          widely and trustworthy sources can be hard to tell apart from the rest.
+        </p>
+        <p>
+          Poor understanding has consequences. When people are unsure about their medicines, they
+          may stop treatment, take it incorrectly or miss warning signs. The Gravitate-Health
+          project highlighted OECD estimates linking poor medication adherence to around 200,000
+          premature deaths in Europe each year.
+          <a href="https://www.ihi.europa.eu/projects-results/project-factsheets/gravitate-health">(Source: IHI project factsheet)</a>
+        </p>
+        <p>
+          Digital information opens new possibilities, from keeping leaflets up to date to bringing
+          the most relevant sections into view for each person. Getting this right needs
+          regulators, industry, health professionals, researchers, technologists and, above all,
+          patients to work on it together.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="values-title">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">What guides us</p>
+        <h2 id="values-title">Our values</h2>
+      </div>
+      <ol class="values" role="list">
+        {
+          values.map((value, index) => (
+            <li class="value">
+              <span class="value__number" aria-hidden="true">{index + 1}</span>
+              <h3>{value.name}</h3>
+              <p>{value.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section id="legacy" class="section section--deep" aria-labelledby="legacy-title">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">Our roots</p>
+        <h2 id="legacy-title">Our relationship to Gravitate-Health</h2>
+      </div>
+      <div class="prose">
+        <p class="lede">
+          Gravitate grows out of {legacy.name}, a European research project that ran from November
+          2020 to June 2026.
+        </p>
+        <p>
+          Gravitate-Health was a public–private partnership funded through the Innovative Medicines
+          Initiative (IMI2). It set out to show how digital, person-centred tools could improve
+          access to, and understanding of, trusted health information. Its central concept, the
+          Gravitate Lens (G-lens), focuses approved medicines information on what matters to each
+          person, without concealing or filtering any of it, and builds on the HL7 FHIR standard
+          for electronic product information.
+        </p>
+        <p>
+          The project has ended, but the need it addressed has not. Gravitate carries its mission
+          forward as an ongoing place to collaborate, rather than a time-limited project.
+        </p>
+        <p class="note">
+          Organisations that took part in Gravitate-Health are not automatically partners of
+          Gravitate. Any partnership with the centre will be agreed and announced separately.
+        </p>
+        <ul class="links" role="list">
+          <li><a href={legacy.url}>Gravitate-Health project website ↗</a></li>
+          <li><a href={legacy.cordisUrl}>Project record on CORDIS (European Commission) ↗</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="collab-title">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">How we work</p>
+        <h2 id="collab-title">Collaboration is how the mission happens</h2>
+      </div>
+      <div class="prose">
+        <p>
+          No single organisation holds all the pieces. Regulators approve the content; companies
+          produce it; standards bodies define the formats; health professionals explain it; and
+          patients live with the consequences of getting it right or wrong.
+        </p>
+        <p>Gravitate provides a neutral, public-interest setting where these groups can:</p>
+        <ul>
+          <li>agree on shared problems worth solving, starting from the needs of patients;</li>
+          <li>design and test improvements together, openly;</li>
+          <li>share what they learn so it benefits everyone, not one organisation.</li>
+        </ul>
+        <p>
+          <a class="link-arrow" href={url('/our-focus/')}>See the areas we focus on <span aria-hidden="true">→</span></a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .two-col {
+    display: grid;
+    gap: var(--space-l);
+  }
+
+  @media (min-width: 56em) {
+    .two-col {
+      grid-template-columns: 1fr 1.6fr;
+      gap: var(--space-2xl);
+    }
+  }
+
+  .statements {
+    display: grid;
+    gap: var(--space-xl);
+  }
+
+  .statement {
+    border-top: 2px solid var(--blue-deep);
+    padding-top: var(--space-m);
+  }
+
+  .statement__label {
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: var(--space-s);
+  }
+
+  .statement__text {
+    font-family: var(--font-display-stack);
+    font-size: var(--step-2);
+    line-height: 1.3;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .values {
+    display: grid;
+    gap: 0 var(--space-xl);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 48em) {
+    .values {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 70em) {
+    .values {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .value {
+    padding-block: var(--space-l);
+    border-top: 1px solid var(--blue-line);
+  }
+
+  .value__number {
+    display: block;
+    font-family: var(--font-display-stack);
+    font-size: var(--step-3);
+    line-height: 1;
+    color: var(--blue);
+    margin-bottom: var(--space-s);
+  }
+
+  .value p {
+    margin: 0;
+  }
+
+  .note {
+    padding-left: var(--space-m);
+    border-left: 3px solid var(--amber);
+  }
+
+  .links {
+    list-style: none;
+    padding: 0;
+  }
+
+  .links a {
+    display: inline-flex;
+    min-height: 2.5rem;
+    align-items: center;
+  }
+
+  .section--deep .lede {
+    color: var(--text-on-dark);
+  }
+</style>

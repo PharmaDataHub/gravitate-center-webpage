@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <rect width="1600" height="900" fill="#F5F8FC"/>
+  <circle cx="1350" cy="120" r="320" fill="none" stroke="#C9D6E8" stroke-width="2"/>
+  <circle cx="1350" cy="120" r="230" fill="#DBE7FD" opacity="0.6"/>
+  <!-- original leaflet -->
+  <g transform="translate(250 150)">
+    <rect width="420" height="600" rx="8" fill="#FFFFFF" stroke="#102A43" stroke-width="4"/>
+    <rect x="44" y="50" width="200" height="22" rx="4" fill="#102A43"/>
+    <g fill="#C9D6E8">
+      <rect x="44" y="110" width="330" height="14" rx="4"/>
+      <rect x="44" y="140" width="300" height="14" rx="4"/>
+      <rect x="44" y="200" width="320" height="14" rx="4"/>
+      <rect x="44" y="230" width="280" height="14" rx="4"/>
+      <rect x="44" y="350" width="330" height="14" rx="4"/>
+      <rect x="44" y="380" width="250" height="14" rx="4"/>
+      <rect x="44" y="440" width="310" height="14" rx="4"/>
+      <rect x="44" y="470" width="290" height="14" rx="4"/>
+      <rect x="44" y="530" width="230" height="14" rx="4"/>
+    </g>
+    <rect x="30" y="278" width="360" height="52" rx="4" fill="#F2B544"/>
+    <rect x="44" y="296" width="300" height="14" rx="4" fill="#102A43"/>
+  </g>
+  <!-- arrow -->
+  <g stroke="#2563EB" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M740 450 H 860"/>
+    <path d="M830 420 L 862 450 L 830 480"/>
+  </g>
+  <!-- focused leaflet -->
+  <g transform="translate(930 150)">
+    <rect width="420" height="600" rx="8" fill="#FFFFFF" stroke="#102A43" stroke-width="4"/>
+    <rect x="44" y="50" width="200" height="22" rx="4" fill="#102A43"/>
+    <rect x="30" y="100" width="360" height="92" rx="4" fill="#F2B544"/>
+    <rect x="44" y="118" width="300" height="14" rx="4" fill="#102A43"/>
+    <rect x="44" y="148" width="250" height="12" rx="4" fill="#102A43" opacity="0.55"/>
+    <g fill="#C9D6E8">
+      <rect x="44" y="230" width="330" height="14" rx="4"/>
+      <rect x="44" y="260" width="300" height="14" rx="4"/>
+      <rect x="44" y="320" width="320" height="14" rx="4"/>
+      <rect x="44" y="350" width="280" height="14" rx="4"/>
+      <rect x="44" y="410" width="330" height="14" rx="4"/>
+      <rect x="44" y="440" width="250" height="14" rx="4"/>
+      <rect x="44" y="500" width="310" height="14" rx="4"/>
+      <rect x="44" y="530" width="290" height="14" rx="4"/>
+    </g>
+  </g>
+</svg>

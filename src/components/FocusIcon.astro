@@ -1,0 +1,74 @@
+---
+/* Simple line icons for the four areas of focus. Decorative; the heading carries the meaning. */
+interface Props {
+  name: 'literacy' | 'connected' | 'codesign' | 'learning';
+}
+const { name } = Astro.props;
+---
+
+<svg class="focus-icon" viewBox="0 0 48 48" width="48" height="48" aria-hidden="true" focusable="false">
+  {
+    name === 'literacy' && (
+      <g>
+        <rect x="10" y="5" width="28" height="38" rx="2" class="stroke" />
+        <path d="M16 14h12M16 20h16" class="stroke" />
+        <rect x="13" y="25" width="22" height="7" rx="1" class="accent" />
+        <path d="M16 38h14" class="stroke" />
+      </g>
+    )
+  }
+  {
+    name === 'connected' && (
+      <g>
+        <circle cx="12" cy="12" r="5" class="stroke" />
+        <circle cx="36" cy="12" r="5" class="stroke" />
+        <circle cx="12" cy="36" r="5" class="stroke" />
+        <circle cx="36" cy="36" r="6" class="accent" />
+        <path d="M17 12h14M12 17v14M16 16l15 15M36 17v13M17 36h13" class="stroke" />
+      </g>
+    )
+  }
+  {
+    name === 'codesign' && (
+      <g>
+        <circle cx="16" cy="15" r="6" class="stroke" />
+        <circle cx="32" cy="15" r="6" class="stroke" />
+        <path d="M5 40c0-7 5-12 11-12s11 5 11 12M21 40c0-7 5-12 11-12s11 5 11 12" class="stroke" />
+        <circle cx="24" cy="24" r="3.5" class="accent" />
+      </g>
+    )
+  }
+  {
+    name === 'learning' && (
+      <g>
+        <path d="M38 24a14 14 0 1 1-4.1-9.9" class="stroke" />
+        <path d="M35 6v9h-9" class="stroke" />
+        <path d="M17 26l5 5 9-11" class="stroke stroke--accent" />
+      </g>
+    )
+  }
+</svg>
+
+<style>
+  .focus-icon {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .stroke {
+    fill: none;
+    stroke: var(--blue);
+    stroke-width: 2.25;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .stroke--accent {
+    stroke: var(--blue-deep);
+    stroke-width: 3;
+  }
+
+  .accent {
+    fill: var(--amber);
+  }
+</style>

@@ -1,0 +1,488 @@
+/*
+ * Gravitate design system
+ * 2+1 palette: two core blues + one amber accent, on neutral backgrounds.
+ * Contrast ratios for each text/background pair are listed in DESIGN.md.
+ */
+
+:root {
+  /* Core palette */
+  --blue-deep: #102a43; /* primary: headings, navigation, footer, strong bands */
+  --blue: #2563eb; /* secondary: links, interactive elements, supporting graphics */
+  --amber: #f2b544; /* accent: focal points and selected CTAs only */
+
+  /* Tonal variations (derived from the core colours only) */
+  --blue-deep-90: #1b3a5a; /* hover on deep blue */
+  --blue-deep-80: #243b53; /* raised surface on deep blue */
+  --blue-dark: #1d4ed8; /* link hover / pressed */
+  --blue-light: #9cbcf7; /* links and accents on deep blue */
+  --blue-tint: #dbe7fd; /* subtle fills, illustration */
+  --blue-line: #c9d6e8; /* rules and borders on light backgrounds */
+  --amber-dark: #e0a22c; /* amber hover */
+  --amber-tint: #fdf1d8; /* rare highlight fill */
+
+  /* Neutrals */
+  --white: #ffffff;
+  --mist: #f5f8fc;
+  --ink: #102a43; /* body headings */
+  --text: #2b3a4a; /* body text */
+  --text-muted: #52606d; /* secondary text, 6.3:1 on white */
+  --text-on-dark: #e6edf6;
+  --text-on-dark-muted: #b8c6d8;
+
+  /* Typography */
+  --font-display-stack: var(--font-display), Georgia, 'Times New Roman', serif;
+  --font-body-stack: var(--font-body), system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --step--1: clamp(0.875rem, 0.85rem + 0.1vw, 0.9375rem);
+  --step-0: clamp(1.0625rem, 1.03rem + 0.15vw, 1.125rem);
+  --step-1: clamp(1.25rem, 1.18rem + 0.35vw, 1.4375rem);
+  --step-2: clamp(1.5rem, 1.36rem + 0.7vw, 1.9375rem);
+  --step-3: clamp(1.875rem, 1.6rem + 1.4vw, 2.75rem);
+  --step-4: clamp(2.375rem, 1.9rem + 2.4vw, 4rem);
+  --step-5: clamp(2.75rem, 2rem + 3.8vw, 5.25rem);
+
+  /* Space */
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-s: 0.75rem;
+  --space-m: 1.25rem;
+  --space-l: 2rem;
+  --space-xl: clamp(2.5rem, 2rem + 2.5vw, 4rem);
+  --space-2xl: clamp(3.5rem, 2.5rem + 5vw, 7rem);
+
+  --container: 74rem;
+  --measure: 40rem;
+  --gutter: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
+  --radius: 3px;
+  --focus-ring: 3px solid var(--blue);
+  --header-height: 4.5rem;
+
+  color-scheme: light;
+}
+
+/* ---------- Reset ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-height) + 1rem);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--white);
+  color: var(--text);
+  font-family: var(--font-body-stack);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  font-feature-settings: 'kern', 'liga';
+  overflow-x: clip;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--ink);
+  line-height: 1.12;
+  margin: 0 0 var(--space-m);
+  text-wrap: balance;
+}
+
+h1,
+h2 {
+  font-family: var(--font-display-stack);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+h1 {
+  font-size: var(--step-4);
+}
+
+h2 {
+  font-size: var(--step-3);
+}
+
+h3 {
+  font-size: var(--step-1);
+  font-weight: 650;
+  letter-spacing: -0.005em;
+  line-height: 1.25;
+}
+
+h4 {
+  font-size: var(--step-0);
+  font-weight: 700;
+}
+
+p,
+ul,
+ol,
+dl,
+blockquote {
+  margin: 0 0 var(--space-m);
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--blue);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  color: var(--blue-dark);
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--amber);
+  color: var(--blue-deep);
+}
+
+abbr[title] {
+  text-decoration: underline dotted;
+  cursor: help;
+}
+
+/* ---------- Utilities ---------- */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.measure {
+  max-width: var(--measure);
+}
+
+.lede {
+  font-size: var(--step-1);
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+/* Eyebrow label: small caps text with a short amber rule. No pill badges. */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  margin: 0 0 var(--space-m);
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--blue-deep);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 1.75rem;
+  height: 3px;
+  background: var(--amber);
+  flex: none;
+}
+
+/* ---------- Sections ---------- */
+.section {
+  padding-block: var(--space-2xl);
+}
+
+.section--mist {
+  background: var(--mist);
+}
+
+.section--deep {
+  background: var(--blue-deep);
+  color: var(--text-on-dark);
+}
+
+.section--deep :is(h1, h2, h3, h4) {
+  color: var(--white);
+}
+
+.section--deep a:not(.button) {
+  color: var(--blue-light);
+}
+
+.section--deep a:not(.button):hover {
+  color: var(--white);
+}
+
+.section--deep .eyebrow {
+  color: var(--text-on-dark);
+}
+
+.section--deep .muted {
+  color: var(--text-on-dark-muted);
+}
+
+.section--deep :focus-visible {
+  outline-color: var(--amber);
+}
+
+.section-head {
+  max-width: 46rem;
+  margin-bottom: var(--space-xl);
+}
+
+.section-head > :last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- Buttons ---------- */
+.button {
+  --_bg: var(--blue);
+  --_fg: var(--white);
+  --_border: var(--blue);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  min-height: 3rem;
+  padding: 0.75rem 1.4rem;
+  border: 2px solid var(--_border);
+  border-radius: var(--radius);
+  background: var(--_bg);
+  color: var(--_fg);
+  font: inherit;
+  font-weight: 650;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.button:hover {
+  --_bg: var(--blue-dark);
+  --_border: var(--blue-dark);
+  color: var(--_fg);
+  text-decoration: none;
+}
+
+.button .arrow {
+  transition: transform 0.15s ease;
+}
+
+.button:hover .arrow {
+  transform: translateX(3px);
+}
+
+.button--accent {
+  --_bg: var(--amber);
+  --_fg: var(--blue-deep);
+  --_border: var(--amber);
+}
+
+.button--accent:hover {
+  --_bg: var(--amber-dark);
+  --_border: var(--amber-dark);
+}
+
+.button--outline {
+  --_bg: transparent;
+  --_fg: var(--blue-deep);
+  --_border: var(--blue-deep);
+}
+
+.button--outline:hover {
+  --_bg: var(--blue-deep);
+  --_fg: var(--white);
+  --_border: var(--blue-deep);
+}
+
+.section--deep .button--outline,
+.on-dark .button--outline {
+  --_fg: var(--white);
+  --_border: var(--blue-light);
+}
+
+.section--deep .button--outline:hover,
+.on-dark .button--outline:hover {
+  --_bg: var(--white);
+  --_fg: var(--blue-deep);
+  --_border: var(--white);
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-s) var(--space-m);
+  align-items: center;
+}
+
+/* Text link with arrow, for secondary actions */
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  min-height: 2.75rem;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.link-arrow:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Prose (article bodies, long-form text) ---------- */
+.prose {
+  max-width: var(--measure);
+}
+
+.prose > * + * {
+  margin-top: 0;
+}
+
+.prose h2 {
+  font-size: var(--step-2);
+  margin-top: var(--space-xl);
+}
+
+.prose h3 {
+  margin-top: var(--space-l);
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.25em;
+}
+
+.prose li + li {
+  margin-top: var(--space-xs);
+}
+
+.prose li::marker {
+  color: var(--blue);
+}
+
+.prose blockquote {
+  margin-inline: 0;
+  padding: var(--space-xs) 0 var(--space-xs) var(--space-m);
+  border-left: 3px solid var(--amber);
+  font-family: var(--font-display-stack);
+  font-size: var(--step-1);
+  color: var(--ink);
+}
+
+.prose img {
+  margin-block: var(--space-l);
+  border-radius: var(--radius);
+}
+
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--blue-line);
+  margin-block: var(--space-xl);
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var(--space-m);
+  font-size: var(--step--1);
+}
+
+.prose th,
+.prose td {
+  text-align: left;
+  padding: var(--space-xs) var(--space-s);
+  border-bottom: 1px solid var(--blue-line);
+}
+
+.prose code {
+  font-size: 0.9em;
+  background: var(--mist);
+  padding: 0.1em 0.3em;
+  border-radius: var(--radius);
+}
+
+/* ---------- Motion ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    animation: reveal 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  @keyframes reveal {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  .site-header nav,
+  .site-footer,
+  .skip-link,
+  .cta-band {
+    display: none !important;
+  }
+
+  body {
+    font-size: 11pt;
+  }
+
+  a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.85em;
+  }
+}

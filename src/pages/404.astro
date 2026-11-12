@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { mainNav } from '../config/site';
+import { url } from '../lib/url';
+---
+
+<BaseLayout
+  title="Page not found"
+  description="The page you were looking for could not be found."
+  noindex
+>
+  <section class="section not-found" aria-labelledby="not-found-title">
+    <div class="container not-found__grid">
+      <div>
+        <p class="eyebrow">Error 404</p>
+        <h1 id="not-found-title">This page has drifted out of orbit</h1>
+        <p class="lede">
+          The address may be mistyped, or the page may have moved. These links should help you find
+          your way.
+        </p>
+        <div class="button-row">
+          <a class="button" href={url('/')}>Go to the home page</a>
+          <a class="button button--outline" href={url('/updates/')}>Browse all updates</a>
+        </div>
+      </div>
+      <nav aria-label="Main sections">
+        <h2 class="not-found__heading">Main sections</h2>
+        <ul role="list">
+          {mainNav.map((item) => (
+            <li>
+              <a href={url(item.href)}>{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    min-height: 60vh;
+  }
+
+  .not-found__grid {
+    display: grid;
+    gap: var(--space-xl);
+  }
+
+  @media (min-width: 56em) {
+    .not-found__grid {
+      grid-template-columns: 2fr 1fr;
+      align-items: end;
+    }
+  }
+
+  h1 {
+    max-width: 16ch;
+  }
+
+  .lede {
+    max-width: 36rem;
+    margin-bottom: var(--space-l);
+  }
+
+  .not-found__heading {
+    font-family: var(--font-body-stack);
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 2px solid var(--blue-deep);
+  }
+
+  li {
+    border-bottom: 1px solid var(--blue-line);
+  }
+
+  li a {
+    display: flex;
+    align-items: center;
+    min-height: 3rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  li a:hover {
+    text-decoration: underline;
+  }
+</style>

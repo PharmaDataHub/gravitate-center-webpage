@@ -1,0 +1,83 @@
+---
+import { url } from '../lib/url';
+
+interface Props {
+  title?: string;
+  text?: string;
+  /** Show the link to the Collaborate page (default) or the slot content instead. */
+  showDefaultAction?: boolean;
+}
+
+const {
+  title = 'Bring your perspective to the table',
+  text = 'Whether you represent patients, care for them, study medicines information or build the systems that carry it, there is a place for you in this work.',
+  showDefaultAction = true,
+} = Astro.props;
+---
+
+<section class="cta-band section section--deep" aria-labelledby="cta-band-title">
+  <div class="container cta-band__inner">
+    <div>
+      <h2 id="cta-band-title">{title}</h2>
+      <p class="lede">{text}</p>
+    </div>
+    <div class="cta-band__actions">
+      <slot />
+      {
+        showDefaultAction && (
+          <a class="button button--accent" href={url('/collaborate/')}>
+            Explore a partnership <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-band {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-band::before {
+    content: '';
+    position: absolute;
+    left: -10rem;
+    bottom: -18rem;
+    width: 30rem;
+    height: 30rem;
+    border-radius: 50%;
+    border: 1px solid var(--blue-deep-80);
+    box-shadow: 0 0 0 5rem var(--blue-deep-90) inset;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .cta-band__inner {
+    position: relative;
+    display: grid;
+    gap: var(--space-l);
+    align-items: end;
+  }
+
+  @media (min-width: 56em) {
+    .cta-band__inner {
+      grid-template-columns: 1.6fr 1fr;
+    }
+
+    .cta-band__actions {
+      justify-self: end;
+    }
+  }
+
+  h2 {
+    max-width: 20ch;
+  }
+
+  .lede {
+    color: var(--text-on-dark);
+    max-width: 38rem;
+    margin-bottom: 0;
+  }
+</style>

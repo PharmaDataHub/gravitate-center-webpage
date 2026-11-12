@@ -1,0 +1,193 @@
+---
+/*
+ * Editorial list of updates: ruled rows, not cards.
+ * Shows date, category, title, excerpt and an optional thumbnail.
+ */
+import { Image } from 'astro:assets';
+import type { Update } from '../lib/updates';
+import { categorySlug, formatDate, isoDate, isPublished, formatEventDates } from '../lib/updates';
+import { url } from '../lib/url';
+
+interface Props {
+  updates: Update[];
+  headingLevel?: 'h2' | 'h3';
+  showImages?: boolean;
+  compact?: boolean;
+}
+
+const { updates, headingLevel = 'h3', showImages = true, compact = false } = Astro.props;
+const Heading = headingLevel;
+---
+
+<ol class:list={['update-list', { 'update-list--compact': compact }]} role="list">
+  {
+    updates.map((entry) => {
+      const { title, description, pubDate, category, image, imageAlt, event, draft } = entry.data;
+      const scheduled = !draft && !isPublished(entry);
+      return (
+        <li class="update-list__item">
+          <article class="update-row">
+            <div class="update-row__meta">
+              <a class="update-row__category" href={url(`/updates/category/${categorySlug(category)}/`)}>
+                {category}
+              </a>
+              <time datetime={isoDate(pubDate)}>{formatDate(pubDate)}</time>
+              {draft && <span class="update-row__flag">Draft · not published</span>}
+              {scheduled && <span class="update-row__flag">Scheduled · not yet published</span>}
+            </div>
+            <div class="update-row__body">
+              <Heading class="update-row__title">
+                <a href={url(`/updates/${entry.id}/`)}>{title}</a>
+              </Heading>
+              {event && (
+                <p class="update-row__event">
+                  <span class="visually-hidden">Event date: </span>
+                  {formatEventDates(event.start, event.end)}
+                  {event.location && <> · {event.location}</>}
+                  {event.online && !event.location && <> · Online</>}
+                </p>
+              )}
+              {!compact && <p class="update-row__excerpt">{description}</p>}
+            </div>
+            {showImages && !compact && image && (
+              <div class="update-row__media">
+                <Image src={image} alt={imageAlt ?? ''} width={320} widths={[240, 320, 480]} sizes="(min-width: 56em) 14rem, 100vw" />
+              </div>
+            )}
+          </article>
+        </li>
+      );
+    })
+  }
+</ol>
+
+<style>
+  .update-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 2px solid var(--blue-deep);
+  }
+
+  .update-list__item {
+    border-bottom: 1px solid var(--blue-line);
+  }
+
+  .update-row {
+    position: relative;
+    display: grid;
+    gap: var(--space-xs) var(--space-l);
+    padding-block: var(--space-l);
+  }
+
+  @media (min-width: 48em) {
+    .update-row {
+      grid-template-columns: 11rem 1fr;
+    }
+
+    .update-row:has(.update-row__media) {
+      grid-template-columns: 11rem 1fr 14rem;
+    }
+  }
+
+  .update-row__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: var(--space-2xs) var(--space-s);
+    font-size: var(--step--1);
+    color: var(--text-muted);
+  }
+
+  @media (min-width: 48em) {
+    .update-row__meta {
+      flex-direction: column;
+    }
+  }
+
+  .update-row__category {
+    position: relative;
+    z-index: 2;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--blue-deep);
+    text-decoration: none;
+    min-height: 1.5rem;
+  }
+
+  .update-row__category:hover {
+    color: var(--blue);
+    text-decoration: underline;
+  }
+
+  .update-row__flag {
+    font-weight: 700;
+    color: var(--blue-deep);
+    background: var(--amber-tint);
+    padding-inline: 0.3rem;
+  }
+
+  .update-row__title {
+    font-family: var(--font-display-stack);
+    font-size: var(--step-2);
+    font-weight: 500;
+    line-height: 1.15;
+    margin-bottom: var(--space-xs);
+  }
+
+  .update-list--compact .update-row__title {
+    font-size: var(--step-1);
+  }
+
+  .update-row__title a {
+    color: var(--blue-deep);
+    text-decoration: none;
+  }
+
+  /* Whole row is clickable, while keeping a single link per item. */
+  .update-row__title a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .update-row:hover .update-row__title a {
+    color: var(--blue);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+  }
+
+  .update-row:focus-within {
+    outline: var(--focus-ring);
+    outline-offset: 4px;
+  }
+
+  .update-row__title a:focus-visible {
+    outline: none;
+  }
+
+  .update-row__event {
+    font-weight: 650;
+    color: var(--blue-deep);
+    margin-bottom: var(--space-xs);
+  }
+
+  .update-row__excerpt {
+    margin: 0;
+    max-width: 42rem;
+  }
+
+  .update-row__media :global(img) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: var(--radius);
+  }
+
+  :global(.section--deep) .update-list {
+    border-top-color: var(--amber);
+  }
+</style>

@@ -1,0 +1,355 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import ContactAction from '../components/ContactAction.astro';
+import { audiences } from '../data/audiences';
+import { contact } from '../config/site';
+import { url } from '../lib/url';
+
+const activities = [
+  {
+    title: 'Co-design',
+    text: 'Shape tools and information formats with the people who will use them, from first sketch to final test.',
+  },
+  {
+    title: 'Shared research',
+    text: 'Develop joint research questions, studies and evaluations on understanding, usability and safe use of medicines.',
+  },
+  {
+    title: 'Implementation learning',
+    text: 'Compare experience of putting ePI and person-centred information into practice: what helped, and what got in the way.',
+  },
+  {
+    title: 'Standards collaboration',
+    text: 'Bring real-world feedback to the development of open standards such as HL7 FHIR ePI.',
+  },
+  {
+    title: 'Knowledge exchange',
+    text: 'Take part in workshops, webinars and open publications that make lessons available to everyone.',
+  },
+];
+
+const firstConversation = [
+  'Who you are, and who you represent or serve',
+  'The problem or opportunity that brought you to us',
+  'What you could contribute: expertise, experience, settings, time or data',
+  'What you would hope to gain, and any constraints we should know about',
+  'A sensible next step: an introduction, a workshop, or a small shared piece of work',
+];
+
+const emailBody = `Hello Gravitate team,
+
+Organisation:
+Our role (e.g. patient organisation, hospital, university, company, standards body):
+What we would like to explore:
+`;
+---
+
+<BaseLayout
+  title="Collaborate"
+  description="How patient organisations, healthcare professionals, researchers, industry and standards bodies can work with Gravitate, and what a first conversation covers."
+>
+  <PageHeader
+    eyebrow="Collaborate"
+    title="Let’s work on this together"
+    lede="Gravitate exists to bring people together around trustworthy health information. Partnerships can be large or small, formal or informal. What matters is a shared commitment to the people who rely on medicines information."
+  >
+    <nav class="jump" aria-label="On this page">
+      <a href="#who">Who can get involved</a>
+      <a href="#activities">What we can do together</a>
+      <a href="#first-conversation">Start a conversation</a>
+    </nav>
+  </PageHeader>
+
+  <section id="who" class="section" aria-labelledby="who-title">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Who can get involved</p>
+        <h2 id="who-title">Different partners, one shared goal</h2>
+        <p>
+          We welcome organisations and communities across the whole journey of medicines
+          information, from those who write it to those who read it.
+        </p>
+      </div>
+
+      <div class="audiences">
+        {
+          audiences.map((audience) => (
+            <article class="audience" id={audience.id} aria-labelledby={`${audience.id}-title`}>
+              <h3 id={`${audience.id}-title`}>{audience.name}</h3>
+              <div class="audience__cols">
+                <div>
+                  <h4>What you could bring</h4>
+                  <ul>
+                    {audience.offer.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h4>What’s in it for you</h4>
+                  <p>{audience.value}</p>
+                </div>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="activities" class="section section--mist" aria-labelledby="activities-title">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">What we can do together</p>
+        <h2 id="activities-title">Potential activities</h2>
+        <p>
+          These are the kinds of collaboration we expect to support. The details of any activity
+          are agreed with the partners involved.
+        </p>
+      </div>
+      <ol class="activities" role="list">
+        {
+          activities.map((activity, index) => (
+            <li class="activity">
+              <span class="activity__number" aria-hidden="true">
+                0{index + 1}
+              </span>
+              <h3>{activity.title}</h3>
+              <p>{activity.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section
+    id="first-conversation"
+    class="section section--deep conversation"
+    aria-labelledby="conversation-title"
+  >
+    <div class="container conversation__grid">
+      <div>
+        <p class="eyebrow">Start a conversation</p>
+        <h2 id="conversation-title">What a useful first conversation covers</h2>
+        <p class="lede">
+          There is no application form and no fee to talk to us. A first conversation is about
+          understanding each other and seeing whether there is a good fit.
+        </p>
+        <ContactAction body={emailBody} />
+        {
+          !contact.email && (
+            <p class="conversation__alt">
+              In the meantime, you can{' '}
+              <a href={url('/rss.xml')}>follow our updates by RSS</a> or read about{' '}
+              <a href={url('/our-focus/')}>our areas of focus</a>.
+            </p>
+          )
+        }
+      </div>
+      <ol class="checklist" role="list">
+        {firstConversation.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="principles-title">
+    <div class="container"><div class="principles">
+      <h2 id="principles-title">How we approach partnerships</h2>
+      <ul class="principles__list">
+        <li>
+          <strong>Public benefit first.</strong> Collaboration serves the goal of trustworthy,
+          understandable information for patients and the public.
+        </li>
+        <li>
+          <strong>Open about who is involved.</strong> We will name partners only once they have
+          agreed, and be clear about each organisation’s role.
+        </li>
+        <li>
+          <strong>Fair involvement.</strong> Patient and community representatives should be
+          properly supported to take part.
+        </li>
+      </ul>
+    </div></div>
+  </section>
+</BaseLayout>
+
+<style>
+  .jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-l);
+    margin-top: var(--space-l);
+  }
+
+  .jump a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    font-weight: 650;
+  }
+
+  .audiences {
+    border-top: 2px solid var(--blue-deep);
+  }
+
+  .audience {
+    display: grid;
+    gap: var(--space-s) var(--space-xl);
+    padding-block: var(--space-l);
+    border-bottom: 1px solid var(--blue-line);
+  }
+
+  @media (min-width: 56em) {
+    .audience {
+      grid-template-columns: 1fr 2fr;
+    }
+  }
+
+  .audience h3 {
+    font-family: var(--font-display-stack);
+    font-size: var(--step-2);
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .audience__cols {
+    display: grid;
+    gap: var(--space-m) var(--space-l);
+  }
+
+  @media (min-width: 40em) {
+    .audience__cols {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .audience h4 {
+    font-size: var(--step--1);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: var(--space-xs);
+  }
+
+  .audience ul {
+    margin: 0;
+    padding-left: 1.1em;
+  }
+
+  .audience li::marker {
+    color: var(--blue);
+  }
+
+  .audience p {
+    margin: 0;
+  }
+
+  .activities {
+    display: grid;
+    gap: 0 var(--space-l);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 2px solid var(--blue-deep);
+  }
+
+  @media (min-width: 48em) {
+    .activities {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 70em) {
+    .activities {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .activity {
+    padding-block: var(--space-l);
+    border-bottom: 1px solid var(--blue-line);
+  }
+
+  .activity__number {
+    display: block;
+    font-family: var(--font-display-stack);
+    font-size: var(--step-1);
+    color: var(--blue);
+    margin-bottom: var(--space-xs);
+  }
+
+  .activity p {
+    margin: 0;
+  }
+
+  .conversation__grid {
+    display: grid;
+    gap: var(--space-xl);
+  }
+
+  @media (min-width: 56em) {
+    .conversation__grid {
+      grid-template-columns: 1.1fr 1fr;
+      gap: var(--space-2xl);
+      align-items: start;
+    }
+  }
+
+  .conversation .lede {
+    color: var(--text-on-dark);
+    margin-bottom: var(--space-l);
+  }
+
+  .conversation__alt {
+    margin-top: var(--space-m);
+  }
+
+  .checklist {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: check;
+    border-top: 2px solid var(--amber);
+  }
+
+  .checklist li {
+    counter-increment: check;
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: var(--space-s);
+    padding-block: var(--space-m);
+    border-bottom: 1px solid var(--blue-deep-80);
+  }
+
+  .checklist li::before {
+    content: counter(check);
+    font-family: var(--font-display-stack);
+    font-size: var(--step-2);
+    line-height: 1;
+    color: var(--amber);
+  }
+
+  .principles {
+    max-width: 48rem;
+  }
+
+  .principles h2 {
+    font-size: var(--step-2);
+  }
+
+  .principles__list {
+    padding-left: 1.1em;
+  }
+
+  .principles__list li + li {
+    margin-top: var(--space-s);
+  }
+
+  .principles__list strong {
+    color: var(--blue-deep);
+  }
+</style>
