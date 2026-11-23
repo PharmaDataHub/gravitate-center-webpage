@@ -2,7 +2,7 @@
 
 ## Concept: focus, not filter
 
-The visual identity comes from Gravitate-Health's central idea: bring the relevant information into **focus** without hiding the rest. The hero illustration shows a medicine leaflet with one line highlighted in orange and every other line still visible. The communities that make trustworthy information possible (patients and carers, clinicians, pharmacists, researchers, industry, standards bodies) orbit the same centre. The concentric "focus" mark in the logo, the faint orbit lines in page headers and the orange highlight all come from this one idea. None of the graphics are decorative science imagery.
+The visual identity comes from Gravitate-Health's central idea: bring the relevant information into **focus** without hiding the rest. The hero illustration shows a medicine leaflet with one line highlighted in orange and every other line still visible. The communities that make trustworthy information possible (patients and carers, clinicians, pharmacists, researchers, industry, standards bodies) orbit the same centre. The faint orbit lines in page headers and the orange highlight all come from this one idea. None of the graphics are decorative science imagery.
 
 The tone is editorial rather than SaaS: a serif display face (Newsreader), a civic, highly legible sans for text (Public Sans, originally designed for public-sector services), ruled lists instead of card grids, numbered sections, generous whitespace, and almost square corners (3px radius). There are no pill badges, carousels, autoplay, pop-ups or scroll hijacking.
 

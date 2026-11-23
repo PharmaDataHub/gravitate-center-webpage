@@ -39,6 +39,6 @@ It also sets a useful standard for anyone building digital health tools: make in
 
 ## The questions that remain
 
-There is still a lot to learn. Which ways of focusing help people most? How do you explain why something has been highlighted? How do you make this work for people with low digital confidence, or in many languages? These are exactly the kinds of questions Gravitate wants to explore with patients, professionals, researchers and the organisations that publish medicines information.
+There is still a lot to learn. Which ways of focusing help people most? How do you explain why something has been highlighted? How do you make this work for people with low digital confidence, or in many languages? These are exactly the kinds of questions Gravitate Center wants to explore with patients, professionals, researchers and the organisations that publish medicines information.
 
 If they matter to you too, [let's talk about collaborating](/collaborate/).

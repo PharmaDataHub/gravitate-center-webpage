@@ -1,6 +1,6 @@
 /**
  * Areas of focus, shown on the home page and the Our focus page.
- * `ambition` describes what Gravitate wants to do; `foundation` describes what
+ * `ambition` describes what Gravitate Center wants to do; `foundation` describes what
  * already exists (from Gravitate-Health or the wider field). Keep the two separate.
  */
 export type FocusArea = {
@@ -31,7 +31,7 @@ export const focusAreas: FocusArea[] = [
     foundation:
       'Gravitate-Health developed the idea of a “lens” that focuses approved information on what is relevant to the reader without concealing or filtering any of it, and studied health literacy among patient groups.',
     ambition:
-      'Gravitate wants to keep improving how approved information is presented, and to make what works openly available to the organisations that produce and deliver it.',
+      'Gravitate Center wants to keep improving how approved information is presented, and to make what works openly available to the organisations that produce and deliver it.',
   },
   {
     id: 'connected-information',
@@ -49,7 +49,7 @@ export const focusAreas: FocusArea[] = [
     foundation:
       'In Europe, regulators and the HL7 community have developed a common ePI standard based on HL7 FHIR. Gravitate-Health built and tested open-source components and worked with an open community on preparing ePI that digital tools can use.',
     ambition:
-      'Gravitate aims to be a neutral place where people implementing ePI and related standards can compare experience, test ideas openly and feed lessons back into standards work.',
+      'Gravitate Center aims to be a neutral place where regulators, the pharmaceutical industry and others implementing ePI and related standards can compare experience, test ideas openly and feed lessons back into standards work.',
   },
   {
     id: 'co-design',
@@ -67,7 +67,7 @@ export const focusAreas: FocusArea[] = [
     foundation:
       'Gravitate-Health developed a set of user personas, three groups of end users and six personas, as a shared reference for design work.',
     ambition:
-      'Gravitate wants co-design to be the normal way of working, with fair and well-supported involvement for patient and community representatives.',
+      'As a community convener and builder, Gravitate Center wants co-design to be the normal way of working: bringing patients, professionals and the pharmaceutical industry into the same conversations, with fair and well-supported involvement for patient and community representatives.',
   },
   {
     id: 'shared-learning',
@@ -85,6 +85,6 @@ export const focusAreas: FocusArea[] = [
     foundation:
       'Gravitate-Health set out an evaluation framework for testing its tools and explored whether clearer information could support adherence and safer medication use.',
     ambition:
-      'Gravitate plans to bring partners together around shared evaluation and implementation learning. We will report results only when the evidence supports them.',
+      'Gravitate Center plans to bring partners together around shared evaluation and implementation learning. We will report results only when the evidence supports them.',
   },
 ];

@@ -6,7 +6,7 @@ description: Illustrative draft showing how an event is announced. The event, da
 pubDate: 2027-01-15
 category: Events
 draft: true
-author: Gravitate team
+author: Gravitate Center team
 event:
   start: 2027-02-20
   end: 2027-02-20

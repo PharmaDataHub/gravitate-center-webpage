@@ -52,7 +52,7 @@ export const audiences: Audience[] = [
   },
   {
     id: 'industry',
-    name: 'Digital health companies and the pharmaceutical industry',
+    name: 'The pharmaceutical industry and digital health companies',
     contribute:
       'Technical and product expertise, and experience of producing and delivering approved information at scale.',
     offer: [

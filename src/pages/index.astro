@@ -6,7 +6,7 @@ import UpdateList from '../components/UpdateList.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { focusAreas } from '../data/focus';
 import { audiences } from '../data/audiences';
-import { legacy } from '../config/site';
+import { legacy, site } from '../config/site';
 import { getLatestUpdates } from '../lib/updates';
 import { url } from '../lib/url';
 
@@ -17,14 +17,15 @@ const latest = await getLatestUpdates(3);
   <section class="hero" aria-labelledby="hero-title">
     <div class="container hero__inner">
       <div class="hero__text reveal">
-        <p class="eyebrow">A centre for trustworthy health information</p>
+        <p class="eyebrow">{site.fullName}</p>
         <h1 id="hero-title">
           Medicines information people can <em>understand</em>, and trust.
         </h1>
         <p class="lede">
-          Gravitate brings patients, health professionals, researchers, industry and standards
-          bodies together to make approved medicines information clearer, better connected and
-          more useful in everyday life. Good information needs many hands. We would like yours.
+          We are a community convener, bringing patients, health professionals, researchers, the
+          pharmaceutical industry and standards bodies together to make approved medicines
+          information clearer, better connected and more useful in everyday life. Good information needs many hands. We would like
+          yours.
         </p>
         <div class="button-row">
           <a class="button button--accent" href={url('/collaborate/')}>
@@ -53,10 +54,11 @@ const latest = await getLatestUpdates(3);
           uncertain quality.
         </p>
         <p>
-          Gravitate exists to close that gap for the public good. We work on how trusted
+          The Center exists to close that gap for the public good. We work on how trusted
           information can reach people in a form they can use: easier to read, connected to the
           systems that carry it, and designed with the people who depend on it. No single
-          organisation can do this alone, so collaboration sits at the heart of everything we do.
+          organisation can do this alone, so we convene and build the community that can: patients,
+          professionals, researchers, regulators and the pharmaceutical industry working side by side.
         </p>
         <a class="link-arrow" href={url('/about/')}>
           Read about our mission and values <span aria-hidden="true">→</span>
@@ -96,7 +98,7 @@ const latest = await getLatestUpdates(3);
         <p class="eyebrow">Ways to contribute</p>
         <h2 id="contribute-title">Everyone who shapes medicines information has a part to play</h2>
         <p>
-          Gravitate is open to organisations and communities who share the goal of trustworthy,
+          Gravitate Center is open to organisations and communities who share the goal of trustworthy,
           understandable health information. Here is where different partners can make the
           biggest difference.
         </p>
@@ -125,18 +127,18 @@ const latest = await getLatestUpdates(3);
       </div>
       <div>
         <p class="lede">
-          Gravitate grows out of {legacy.name}, a European public–private research project that ran
+          Gravitate Center grows out of {legacy.name}, a European public–private research project that ran
           from 2020 to 2026. Its central idea was simple and lasting: digital tools should bring
           approved medicines information into <em>focus</em> for each person, without concealing or
           filtering any of it.
         </p>
         <p>
-          We carry that idea forward as an ongoing, collaborative centre, so the knowledge,
+          We carry that idea forward as an ongoing, collaborative Center, so the knowledge,
           standards work and relationships built during the project keep serving the public.
         </p>
         <div class="button-row">
           <a class="link-arrow" href={url('/about/#legacy')}>
-            How Gravitate relates to the project <span aria-hidden="true">→</span>
+            How Gravitate Center relates to the project <span aria-hidden="true">→</span>
           </a>
           <a class="link-arrow" href={legacy.url}>
             Visit the Gravitate-Health website <span aria-hidden="true">↗</span>

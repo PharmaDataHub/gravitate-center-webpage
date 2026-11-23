@@ -6,12 +6,14 @@
  */
 
 export const site = {
-  name: 'Gravitate',
-  /** Used in <title> tags: "Page title · Gravitate". */
-  titleSuffix: 'Gravitate',
+  name: 'Gravitate Center',
+  /** Full name, spelled out in prominent places (home page, About, footer, metadata). */
+  fullName: 'Gravitate Center for Trusted Health Information',
+  /** Used in <title> tags: "Page title · Gravitate Center". */
+  titleSuffix: 'Gravitate Center',
   tagline: 'Trusted health information, shaped with the people who use it.',
   description:
-    'Gravitate is a mission-driven centre bringing patients, health professionals, researchers, industry and standards bodies together to make medicines information understandable, connected and trustworthy.',
+    'Gravitate Center for Trusted Health Information is a community convener bringing patients, health professionals, researchers, the pharmaceutical industry and standards bodies together to make medicines information understandable, connected and trustworthy.',
   locale: 'en',
   ogLocale: 'en_GB',
 };
@@ -30,8 +32,8 @@ export const contact: {
   generalSubject: string;
 } = {
   email: null,
-  partnershipSubject: 'Partnership enquiry – Gravitate',
-  generalSubject: 'Enquiry – Gravitate',
+  partnershipSubject: 'Partnership enquiry – Gravitate Center',
+  generalSubject: 'Enquiry – Gravitate Center',
 };
 
 export type NavItem = { label: string; href: string };
@@ -64,7 +66,7 @@ export const updateCategories = ['News', 'Insights', 'Events', 'Opportunities'] 
 export type UpdateCategory = (typeof updateCategories)[number];
 
 export const categoryDescriptions: Record<UpdateCategory, string> = {
-  News: 'Announcements and developments from Gravitate.',
+  News: 'Announcements and developments from Gravitate Center.',
   Insights: 'Explainers and perspectives on health information, ePI and co-design.',
   Events: 'Workshops, meetings and gatherings, online and in person.',
   Opportunities: 'Calls for collaborators, consultations and ways to take part.',

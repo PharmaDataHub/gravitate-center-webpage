@@ -29,6 +29,25 @@ const activities = [
   },
 ];
 
+const whatWeDo = [
+  {
+    title: 'Convene the community',
+    text: 'Bring patients, health professionals, researchers, regulators, the pharmaceutical industry and standards bodies around the same table, in workshops, meetings and open events.',
+  },
+  {
+    title: 'Build shared priorities',
+    text: 'Help partners agree on the problems in medicines information worth solving together, starting from what patients need.',
+  },
+  {
+    title: 'Make collaboration practical',
+    text: 'Set up co-design, research and implementation work between partners who would not otherwise meet, in a neutral, pre-competitive setting.',
+  },
+  {
+    title: 'Share what we learn',
+    text: 'Publish lessons, explainers and updates openly, so the wider community can build on them.',
+  },
+];
+
 const firstConversation = [
   'Who you are, and who you represent or serve',
   'The problem or opportunity that brought you to us',
@@ -37,7 +56,7 @@ const firstConversation = [
   'A sensible next step: an introduction, a workshop, or a small shared piece of work',
 ];
 
-const emailBody = `Hello Gravitate team,
+const emailBody = `Hello Gravitate Center team,
 
 Organisation:
 Our role (e.g. patient organisation, hospital, university, company, standards body):
@@ -47,21 +66,46 @@ What we would like to explore:
 
 <BaseLayout
   title="Collaborate"
-  description="How patient organisations, healthcare professionals, researchers, industry and standards bodies can work with Gravitate, and what a first conversation covers."
+  description="What Gravitate Center for Trusted Health Information does, how patient organisations, healthcare professionals, researchers, the pharmaceutical industry and standards bodies can work with it, and what a first conversation covers."
 >
   <PageHeader
     eyebrow="Collaborate"
     title="Let’s work on this together"
-    lede="Gravitate exists to bring people together around trustworthy health information. Partnerships can be large or small, formal or informal. What matters is a shared commitment to the people who rely on medicines information."
+    lede="Gravitate Center for Trusted Health Information is a community convener: it exists to bring people together around trustworthy health information, from patient organisations to the pharmaceutical industry. Partnerships can be large or small, formal or informal. What matters is a shared commitment to the people who rely on medicines information."
   >
     <nav class="jump" aria-label="On this page">
+      <a href="#what-we-do">What we do</a>
       <a href="#who">Who can get involved</a>
       <a href="#activities">What we can do together</a>
       <a href="#first-conversation">Start a conversation</a>
     </nav>
   </PageHeader>
 
-  <section id="who" class="section" aria-labelledby="who-title">
+  <section id="what-we-do" class="section" aria-labelledby="what-title">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">What we do</p>
+        <h2 id="what-title">We convene and build the community around trusted health information</h2>
+        <p>
+          No single organisation can make medicines information work for everyone. Gravitate Center
+          is where the people who write, regulate, deliver and use that information work on it
+          together.
+        </p>
+      </div>
+      <ul class="what-we-do" role="list">
+        {
+          whatWeDo.map((item) => (
+            <li>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section id="who" class="section section--mist" aria-labelledby="who-title">
     <div class="container">
       <div class="section-head">
         <p class="eyebrow">Who can get involved</p>
@@ -98,7 +142,7 @@ What we would like to explore:
     </div>
   </section>
 
-  <section id="activities" class="section section--mist" aria-labelledby="activities-title">
+  <section id="activities" class="section" aria-labelledby="activities-title">
     <div class="container">
       <div class="section-head">
         <p class="eyebrow">What we can do together</p>
@@ -190,6 +234,34 @@ What we would like to explore:
     align-items: center;
     min-height: 2.75rem;
     font-weight: 650;
+  }
+
+  .what-we-do {
+    display: grid;
+    gap: 0 var(--space-l);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 2px solid var(--blue-deep);
+  }
+
+  @media (min-width: 48em) {
+    .what-we-do {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .what-we-do li {
+    padding-block: var(--space-l);
+    border-bottom: 1px solid var(--blue-line);
+  }
+
+  .what-we-do h3 {
+    margin-bottom: var(--space-xs);
+  }
+
+  .what-we-do p {
+    margin: 0;
   }
 
   .audiences {

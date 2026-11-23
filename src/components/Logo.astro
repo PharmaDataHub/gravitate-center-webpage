@@ -1,8 +1,14 @@
 ---
 /*
- * Wordmark: a small "focus" mark (concentric rings drawing toward a centre point)
- * beside the name. Provisional until an approved logo exists (see CONTENT_REVIEW.md).
+ * Logo: the Gravitate Center mark beside the name.
+ *
+ * TEMPORARY: the mark is a raster cut-out from the slide template background
+ * (src/assets/brand/logo-mark.png, an alpha mask), tinted with CSS so one file
+ * serves both the blue and the white (inverse) versions. Replace it with the
+ * official SVG logo when it is available.
  */
+import mark from '../assets/brand/logo-mark.png';
+
 interface Props {
   inverse?: boolean;
 }
@@ -10,13 +16,8 @@ const { inverse = false } = Astro.props;
 ---
 
 <span class:list={['logo', { 'logo--inverse': inverse }]}>
-  <svg class="logo__mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" focusable="false">
-    <circle cx="16" cy="16" r="14.5" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.45"></circle>
-    <circle cx="16" cy="16" r="9.5" fill="none" stroke="currentColor" stroke-width="2"></circle>
-    <circle cx="16" cy="16" r="4" class="logo__core"></circle>
-    <circle cx="27.6" cy="7.4" r="2.6" class="logo__core"></circle>
-  </svg>
-  <span class="logo__text">Gravitate</span>
+  <span class="logo__mark" style={`--logo-mark: url(${mark.src})`} aria-hidden="true"></span>
+  <span class="logo__text">Gravitate Center</span>
 </span>
 
 <style>
@@ -32,13 +33,22 @@ const { inverse = false } = Astro.props;
   }
 
   .logo__mark {
-    width: 2rem;
-    height: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
     flex: none;
+    background: var(--blue-brand);
+    mask: var(--logo-mark) center / contain no-repeat;
   }
 
-  .logo__core {
-    fill: var(--orange);
+  .logo--inverse .logo__mark {
+    background: var(--white);
+  }
+
+  @media (forced-colors: active) {
+    .logo__mark {
+      forced-color-adjust: none;
+      background: CanvasText;
+    }
   }
 
   .logo__text {
@@ -47,5 +57,16 @@ const { inverse = false } = Astro.props;
     font-weight: 600;
     letter-spacing: -0.01em;
     line-height: 1;
+  }
+
+  @media (max-width: 30em) {
+    .logo__mark {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    .logo__text {
+      font-size: 1.3rem;
+    }
   }
 </style>

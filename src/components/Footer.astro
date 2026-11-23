@@ -9,9 +9,10 @@ const year = new Date().getFullYear();
 <footer class="site-footer">
   <div class="container site-footer__grid">
     <div class="site-footer__about">
-      <a href={url('/')} class="site-footer__brand" aria-label="Gravitate home">
+      <a href={url('/')} class="site-footer__brand" aria-label="Gravitate Center home">
         <Logo inverse />
       </a>
+      <p class="site-footer__name">{site.fullName}</p>
       <p>{site.tagline}</p>
       <p class="site-footer__legacy">
         Building on the work of the <a href={legacy.url}>{legacy.name}</a> project ({legacy.period}).
@@ -31,7 +32,7 @@ const year = new Date().getFullYear();
 
     <div>
       <h2 class="site-footer__heading">Work with us</h2>
-      <p>Patient groups, clinicians, researchers, industry and standards bodies are all welcome.</p>
+      <p>Patient groups, clinicians, researchers, the pharmaceutical industry and standards bodies are all welcome.</p>
       <a class="button button--accent" href={url('/collaborate/')}>
         Explore a partnership
       </a>
@@ -84,6 +85,10 @@ const year = new Date().getFullYear();
 
   .site-footer__about p {
     max-width: 26rem;
+  }
+
+  .site-footer__name {
+    font-weight: 600;
   }
 
   .site-footer__legacy {

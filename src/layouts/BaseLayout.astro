@@ -31,7 +31,7 @@ const {
   jsonLd = [],
 } = Astro.props;
 
-const fullTitle = title ? `${title} · ${site.titleSuffix}` : `${site.name} · ${site.tagline}`;
+const fullTitle = title ? `${title} · ${site.titleSuffix}` : `${site.fullName} · ${site.tagline}`;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const socialImage = image
   ? new URL(image, Astro.site).href
@@ -40,7 +40,8 @@ const socialImage = image
 const baseJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: site.name,
+  name: site.fullName,
+  alternateName: site.name,
   url: absoluteUrl('/', Astro.site),
   inLanguage: site.locale,
 };

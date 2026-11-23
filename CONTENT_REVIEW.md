@@ -52,6 +52,6 @@ Publication dates for the three published updates are placeholders for the launc
 
 ## Brand
 
-- The wordmark and "focus" mark (`src/components/Logo.astro`, `public/favicon.svg`) are **provisional**. Replace them if an approved logo exists.
+- The logo mark in `src/components/Logo.astro` is a **temporary** raster cut-out from the slide template (`src/assets/brand/logo-mark.png`). Replace it with the official SVG logo (colour and white versions) when available. The favicon (`public/favicon.svg`) is still the old provisional mark.
 - The social sharing image `public/social-card.png` is generated from `scripts/art/social-card.svg`. Regenerate it if the tagline or logo changes (`rsvg-convert -w 1200 -h 630 scripts/art/social-card.svg -o public/social-card.png`).
 - Tagline: "Trusted health information, shaped with the people who use it." Confirm or replace in `src/config/site.ts`.

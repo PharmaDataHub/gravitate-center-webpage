@@ -32,4 +32,4 @@ Structured information opens possibilities that a PDF cannot:
 
 ## What ePI does not do by itself
 
-A standard is a foundation, not a finished service. Someone still has to write information clearly, design tools that people find helpful, and check that those tools really improve understanding. That work is where collaboration matters most, and it is a core part of [Gravitate's focus](/our-focus/#connected-information).
+A standard is a foundation, not a finished service. Someone still has to write information clearly, design tools that people find helpful, and check that those tools really improve understanding. That work is where collaboration matters most, and it is a core part of [Gravitate Center's focus](/our-focus/#connected-information).
