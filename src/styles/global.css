@@ -1,33 +1,37 @@
 /*
- * Gravitate design system
- * 2+1 palette: two core blues + one amber accent, on neutral backgrounds.
- * Contrast ratios for each text/background pair are listed in DESIGN.md.
+ * Gravitate Center design system
+ * 2+1 palette from the Gravitate Center slide template: two core blues + one
+ * orange accent, on neutral backgrounds. The template blue (#238CBD) and
+ * logo coral (#F17A63) are kept for graphics and fills; text uses shades that
+ * pass WCAG AA. Contrast ratios for each text/background pair are in DESIGN.md.
  */
 
 :root {
   /* Core palette */
-  --blue-deep: #102a43; /* primary: headings, navigation, footer, strong bands */
-  --blue: #2563eb; /* secondary: links, interactive elements, supporting graphics */
-  --amber: #f2b544; /* accent: focal points and selected CTAs only */
+  --blue-deep: #08263a; /* primary: headings, navigation, footer, strong bands */
+  --blue: #1a6f9b; /* secondary: links, interactive elements (AA-safe shade of the template blue) */
+  --orange: #f17a63; /* accent: focal points and selected CTAs only (coral from the logo heart) */
 
   /* Tonal variations (derived from the core colours only) */
-  --blue-deep-90: #1b3a5a; /* hover on deep blue */
-  --blue-deep-80: #243b53; /* raised surface on deep blue */
-  --blue-dark: #1d4ed8; /* link hover / pressed */
-  --blue-light: #9cbcf7; /* links and accents on deep blue */
-  --blue-tint: #dbe7fd; /* subtle fills, illustration */
-  --blue-line: #c9d6e8; /* rules and borders on light backgrounds */
-  --amber-dark: #e0a22c; /* amber hover */
-  --amber-tint: #fdf1d8; /* rare highlight fill */
+  --blue-brand: #238cbd; /* template blue: illustrations and graphics only, never text */
+  --blue-deep-90: #0f354c; /* hover on deep blue */
+  --blue-deep-80: #163f58; /* raised surface on deep blue */
+  --blue-dark: #155a7e; /* link hover / pressed */
+  --blue-light: #8ccbea; /* links and accents on deep blue */
+  --blue-tint: #dceef7; /* subtle fills, illustration */
+  --blue-line: #c3dae7; /* rules and borders on light backgrounds */
+  --orange-dark: #d9553b; /* state indicators on light backgrounds (3:1 on mist; coral is 2.6:1) */
+  --orange-light: #f4937f; /* orange hover (lighter keeps deep-blue text above 4.5:1) */
+  --orange-tint: #fdece8; /* rare highlight fill */
 
   /* Neutrals */
   --white: #ffffff;
-  --mist: #f5f8fc;
-  --ink: #102a43; /* body headings */
-  --text: #2b3a4a; /* body text */
-  --text-muted: #52606d; /* secondary text, 6.3:1 on white */
-  --text-on-dark: #e6edf6;
-  --text-on-dark-muted: #b8c6d8;
+  --mist: #f3f8fb;
+  --ink: #08263a; /* body headings */
+  --text: #253744; /* body text */
+  --text-muted: #4d5f6b; /* secondary text, 6.6:1 on white */
+  --text-on-dark: #e4eef4;
+  --text-on-dark-muted: #b3c7d4;
 
   /* Typography */
   --font-display-stack: var(--font-display), Georgia, 'Times New Roman', serif;
@@ -164,7 +168,7 @@ a:hover {
 }
 
 ::selection {
-  background: var(--amber);
+  background: var(--orange);
   color: var(--blue-deep);
 }
 
@@ -207,7 +211,7 @@ abbr[title] {
   color: var(--text-muted);
 }
 
-/* Eyebrow label: small caps text with a short amber rule. No pill badges. */
+/* Eyebrow label: small caps text with a short orange rule. No pill badges. */
 .eyebrow {
   display: flex;
   align-items: center;
@@ -224,7 +228,7 @@ abbr[title] {
   content: '';
   width: 1.75rem;
   height: 3px;
-  background: var(--amber);
+  background: var(--orange);
   flex: none;
 }
 
@@ -263,7 +267,7 @@ abbr[title] {
 }
 
 .section--deep :focus-visible {
-  outline-color: var(--amber);
+  outline-color: var(--orange);
 }
 
 .section-head {
@@ -317,14 +321,14 @@ abbr[title] {
 }
 
 .button--accent {
-  --_bg: var(--amber);
+  --_bg: var(--orange);
   --_fg: var(--blue-deep);
-  --_border: var(--amber);
+  --_border: var(--orange);
 }
 
 .button--accent:hover {
-  --_bg: var(--amber-dark);
-  --_border: var(--amber-dark);
+  --_bg: var(--orange-light);
+  --_border: var(--orange-light);
 }
 
 .button--outline {
@@ -407,7 +411,7 @@ abbr[title] {
 .prose blockquote {
   margin-inline: 0;
   padding: var(--space-xs) 0 var(--space-xs) var(--space-m);
-  border-left: 3px solid var(--amber);
+  border-left: 3px solid var(--orange);
   font-family: var(--font-display-stack);
   font-size: var(--step-1);
   color: var(--ink);

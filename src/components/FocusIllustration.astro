@@ -2,7 +2,7 @@
 /*
  * Hero illustration: "focus, not filter".
  * A medicine leaflet sits at the centre; every line remains visible, while the
- * line most relevant to the reader is brought into focus (amber). Around it,
+ * line most relevant to the reader is brought into focus (orange). Around it,
  * the communities that make trustworthy information possible orbit the same centre.
  */
 const nodes = [
@@ -95,7 +95,7 @@ const toXY = (angle: number, r: number) => {
   }
 
   .ring {
-    stroke: var(--blue);
+    stroke: var(--blue-brand);
     stroke-width: 1.5;
     opacity: 0.35;
   }
@@ -112,17 +112,17 @@ const toXY = (angle: number, r: number) => {
   }
 
   .spoke {
-    stroke: var(--blue);
+    stroke: var(--blue-brand);
     stroke-width: 1;
     opacity: 0.18;
   }
 
   .node__dot {
-    fill: var(--blue);
+    fill: var(--blue-brand);
   }
 
   .node--accent .node__dot {
-    fill: var(--amber);
+    fill: var(--orange);
     stroke: var(--blue-deep);
     stroke-width: 2;
   }
@@ -150,7 +150,7 @@ const toXY = (angle: number, r: number) => {
   }
 
   .leaflet__focus {
-    fill: var(--amber);
+    fill: var(--orange);
   }
 
   .leaflet__line--focus {
